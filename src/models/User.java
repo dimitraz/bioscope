@@ -4,7 +4,7 @@ public class User {
     private String firstName, lastName, username, gender, occupation;
     private int age; 
     
-    public User(String firstName, String lastName, String username, String gender, String occupation, int age) {
+    public User(String firstName, String lastName, String username, String gender, String occupation, int age) {      
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -20,8 +20,7 @@ public class User {
         + "; User ID: " + getUsername() 
         + "; Gender: " + getGender() 
         + "; Occupation: " + getOccupation()
-        + "; Age: " + getAge()
-        + "\n";
+        + "; Age: " + getAge() + ".";
     }
 
     // Getters and Setters
@@ -70,7 +69,9 @@ public class User {
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if(age > 0) {
+            this.age = age;
+        }
     }
   
 }
