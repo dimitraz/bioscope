@@ -4,13 +4,55 @@ public class User {
     private String firstName, lastName, username, gender, occupation;
     private int age; 
     
-    public User(String firstName, String lastName, String username, String gender, String occupation, int age) {      
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.gender = gender;
+    public User(String firstName, String lastName, String username, String gender, String occupation, int age) {          
+    	if(firstName.isEmpty() || containsIllegals(firstName)) {
+    		throw new IllegalArgumentException();
+    	} 
+    	else {
+    		if(firstName.length() > 9) {
+    			this.firstName = firstName.substring(0, 9);
+    		}
+    		else {
+    			this.firstName = firstName;
+    		}
+    	}
+    	
+    	if(lastName.isEmpty() || containsIllegals(lastName)) {
+    		throw new IllegalArgumentException();
+    	} 
+    	else {
+    		if(lastName.length() > 9) {
+    			this.lastName = lastName.substring(0, 9);
+    		}
+    		else {
+    			this.lastName = lastName;
+    		}
+    	}    
+        
+        if(username.isEmpty() || containsIllegals(username)) {
+        	throw new IllegalArgumentException();
+    	} 
+        else {
+    		if(lastName.length() > 9) {
+    			this.username = username.substring(0, 9);
+    		}
+    		else {
+    			this.username = username;
+    		}
+    	}    
+        
+        if(gender.equals("F") || gender.equals("M")) {
+        	this.gender = gender;
+        } else {
+        	this.gender = "U"; // Undefined
+        }
+        
         this.occupation = occupation;
-        this.age = age;
+        if(age > 0) {
+        	this.age = age;
+        } else {
+        	age = 0;
+        }
     }
     
     @Override 
@@ -21,6 +63,11 @@ public class User {
         + "; Gender: " + getGender() 
         + "; Occupation: " + getOccupation()
         + "; Age: " + getAge() + ".";
+    }
+    
+    public boolean containsIllegals(String s) {
+        String[] arr = s.split("[~#@*+%{}<>\\[\\]|\"\\_^]", 2);
+        return arr.length > 1;
     }
 
     // Getters and Setters

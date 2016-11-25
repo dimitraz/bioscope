@@ -31,12 +31,13 @@ public class UserTest {
     }
     
     // Test boundary conditions
-    @Test (expected = IllegalArgumentException.class) 
+    @Test 
     public void testInvalidAge() {
         User user = new User("Fred", "Flinstone", "234", "M", "Cartoon", -29);
+        assertEquals(user.getAge(), 0);
     }
        
-    @Test (expected = IllegalArgumentException.class) 
+    @Test 
     public void testInvalidGender() {
         User user = new User("Fred", "Flinstone", "234", "MALE", "Cartoon", 29);
     }
@@ -44,11 +45,6 @@ public class UserTest {
     @Test (expected = IllegalArgumentException.class) 
     public void testEmptyName() {
         User user = new User("", "Flinstone", "234", "M", "Cartoon", 29);
-    }
-    
-    @Test (expected = NullPointerException.class) 
-    public void testNullName() {
-        User user = new User(null, "", "234", "M", "Cartoon", 0);
     }
     
     @Test
@@ -61,9 +57,16 @@ public class UserTest {
         fail("Not yet implemented");
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class) 
     public void testName() {
-        fail("Not yet implemented");
+    	User user = new User("***", "{}]{|/", "234", "M", "Cartoon", 29);
     }
 
+    @Test 
+    public void testStringLimit() {
+    	User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
+    	assertEquals(user.getFirstName(), "Hansel-An");
+    	assertEquals(user.getLastName(), "CharlieAn");
+    	assertEquals(user.getUsername(), "WillyWonk");	
+    }
 }
