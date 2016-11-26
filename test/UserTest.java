@@ -1,4 +1,8 @@
 import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 import models.User;
 
@@ -17,16 +21,22 @@ import models.User;
 //  Cardinality - Are there exactly enough values?
 //  Time (absolute and relative) - Is everything happening in order? At the right time? In time?
 public class UserTest {
-    
+	private User[] users = {
+		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
+		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
+		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
+		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29)
+	};
+	
     // Test basic user information
     @Test
     public void testNewUser() {
-        User user = new User("Fred", "Flinstone", "234", "M", "Cartoon", 29);
+        User user = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
         assertEquals(user.getFirstName(), "Fred");
         assertEquals(user.getLastName(), "Flinstone");
         assertEquals(user.getUsername(), "234");
         assertEquals(user.getGender(), "M");
-        assertEquals(user.getOccupation(), "Cartoon");
+        assertEquals(user.getEmail(), "Cartoon@gmail.com");
         assertEquals(user.getAge(), 29);
     }
     
@@ -69,4 +79,18 @@ public class UserTest {
     	assertEquals(user.getLastName(), "CharlieAn");
     	assertEquals(user.getUsername(), "WillyWonk");	
     }
+    
+    @Test
+    public void validEmail() {
+        fail("Not yet implemented");
+    }
+    
+	@Test
+	public void testIds() {
+		Set<Long> ids = new HashSet<>();
+		for (User user : users) {
+			ids.add(user.id);
+		}
+		assertEquals(users.length, ids.size());
+	}
 }

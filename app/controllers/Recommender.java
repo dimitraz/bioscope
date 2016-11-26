@@ -34,8 +34,10 @@ public class Recommender {
     public static void main(String[] args) {
         try {
             parseData();
-        } catch (Exception e) {            
+        } 
+        catch (Exception e) {            
         }
+        
         for(User u : users) {
             System.out.println(u);
         }

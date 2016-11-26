@@ -1,73 +1,90 @@
 package models;
 
+import com.google.common.base.Objects;
+
 public class User {
-    private String firstName, lastName, username, gender, occupation;
-    private int age; 
-    
-    public User(String firstName, String lastName, String username, String gender, String occupation, int age) {          
-    	if(firstName.isEmpty() || containsIllegals(firstName)) {
-    		throw new IllegalArgumentException();
-    	} 
-    	else {
-    		if(firstName.length() > 9) {
-    			this.firstName = firstName.substring(0, 9);
-    		}
-    		else {
-    			this.firstName = firstName;
-    		}
-    	}
-    	
-    	if(lastName.isEmpty() || containsIllegals(lastName)) {
-    		throw new IllegalArgumentException();
-    	} 
-    	else {
-    		if(lastName.length() > 9) {
-    			this.lastName = lastName.substring(0, 9);
-    		}
-    		else {
-    			this.lastName = lastName;
-    		}
-    	}    
-        
-        if(username.isEmpty() || containsIllegals(username)) {
-        	throw new IllegalArgumentException();
-    	} 
-        else {
-    		if(lastName.length() > 9) {
-    			this.username = username.substring(0, 9);
-    		}
-    		else {
-    			this.username = username;
-    		}
-    	}    
-        
-        if(gender.equals("F") || gender.equals("M")) {
-        	this.gender = gender;
+    static long counter = 0l;
+    public long id;
+    private String firstName, lastName, username, gender, email;
+    private int age;
+
+    public User(String firstName, String lastName, String username, String gender, String email, int age) {
+        if (firstName.isEmpty() || containsIllegals(firstName)) {
+            throw new IllegalArgumentException();
         } else {
-        	this.gender = "U"; // Undefined
+            if (firstName.length() > 9) {
+                this.firstName = firstName.substring(0, 9);
+            } else {
+                this.firstName = firstName;
+            }
         }
-        
-        this.occupation = occupation;
-        if(age > 0) {
-        	this.age = age;
+
+        if (lastName.isEmpty() || containsIllegals(lastName)) {
+            throw new IllegalArgumentException();
         } else {
-        	age = 0;
+            if (lastName.length() > 9) {
+                this.lastName = lastName.substring(0, 9);
+            } else {
+                this.lastName = lastName;
+            }
         }
+
+        if (username.isEmpty() || containsIllegals(username)) {
+            throw new IllegalArgumentException();
+        } else {
+            if (lastName.length() > 9) {
+                this.username = username.substring(0, 9);
+            } else {
+                this.username = username;
+            }
+        }
+
+        if (gender.equals("F") || gender.equals("M")) {
+            this.gender = gender;
+        } else {
+            this.gender = "U"; // Undefined
+        }
+
+        this.email = email.toLowerCase();
+
+        if (age > 0) {
+            this.age = age;
+        } else {
+            age = 0;
+        }
+
+        this.id = counter++;
     }
-    
-    @Override 
+
+    @Override
     public String toString() {
-        return "Name: " + getFirstName() 
-        + "; Last name: " + getLastName() 
-        + "; User ID: " + getUsername() 
-        + "; Gender: " + getGender() 
-        + "; Occupation: " + getOccupation()
-        + "; Age: " + getAge() + ".";
+        return "Name: " + getFirstName() + "; Last name: " + getLastName() + "; Username: " + getUsername()
+                + "; User ID: " + id + "; Gender: " + getGender() + "; Email: " + getEmail() + "; Age: " + getAge()
+                + ".";
     }
-    
+
+    // Check if strings contain illegal characters
     public boolean containsIllegals(String s) {
         String[] arr = s.split("[~#@*+%{}<>\\[\\]|\"\\_^]", 2);
         return arr.length > 1;
+    }
+
+    // User hash code
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this.id, this.firstName, this.lastName, this.email);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof User) {
+            final User other = (User) obj;
+            return Objects.equal(firstName, other.firstName) 
+                    && Objects.equal(lastName, other.lastName)
+                    && Objects.equal(email, other.email);
+        } else {
+            return false;
+        }
     }
 
     // Getters and Setters
@@ -103,12 +120,12 @@ public class User {
         this.gender = gender;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public String getEmail() {
+        return email;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setEmail(String email) {
+        this.email = email.toLowerCase();
     }
 
     public int getAge() {
@@ -116,9 +133,9 @@ public class User {
     }
 
     public void setAge(int age) {
-        if(age > 0) {
+        if (age > 0) {
             this.age = age;
         }
     }
-  
+
 }
