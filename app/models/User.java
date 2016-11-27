@@ -58,9 +58,14 @@ public class User {
 
     @Override
     public String toString() {
-        return "Name: " + getFirstName() + "; Last name: " + getLastName() + "; Username: " + getUsername()
-                + "; User ID: " + id + "; Gender: " + getGender() + "; Email: " + getEmail() + "; Age: " + getAge()
-                + ".";
+        return "Name: " + getFirstName() 
+        + "; Last name: " + getLastName() 
+        + "; Username: " + getUsername()
+        + "; User ID: " + id 
+        + "; Gender: " + getGender() 
+        + "; Email: " + getEmail() 
+        + "; Age: " + getAge()
+        + ".";
     }
 
     // Check if strings contain illegal characters
