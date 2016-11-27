@@ -1,14 +1,17 @@
 package controllers;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import edu.princeton.cs.introcs.In;
 import models.User;
+import utils.SerializerInterface;
+import utils.JSONSerializer;
 
 public class Recommender {
-    private static List<User> users = new ArrayList<User>();
+    // private static List<User> users = new ArrayList<User>();
     
-    private static void parseData() throws Exception {
+    private static void parseData(RecommenderAPI recommenderAPI) throws Exception {
         File usersFile = new File("data/users5.dat");
         In inUsers = new In(usersFile);
         // each field is separated(delimited) by a '|'
@@ -23,7 +26,7 @@ public class Recommender {
             // output user data to console.
             if (userTokens.length == 7) {
                 User user = new User(userTokens[1], userTokens[2], userTokens[0], userTokens[4], userTokens[5], Integer.parseInt(userTokens[3]));
-                users.add(user);
+                recommenderAPI.addUser(user);
             } 
             else {
                 throw new Exception("Invalid member length: " + userTokens.length);
@@ -32,14 +35,27 @@ public class Recommender {
     }
     
     public static void main(String[] args) {
-        try {
-            parseData();
-        } 
-        catch (Exception e) {            
-        }
+        File datastore = new File("datastore.json");
+        SerializerInterface serializer = new JSONSerializer(datastore);
+        RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
-        for(User u : users) {
+        try {
+            //parseData(recommenderAPI);
+            recommenderAPI.load();
+        } catch (Exception e) {
+        }
+
+        Collection<User> users = recommenderAPI.getUsers();
+        for (User u : users) {
             System.out.println(u);
         }
+        
+        try {
+            recommenderAPI.write();
+        } 
+        catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } 
     }
 }

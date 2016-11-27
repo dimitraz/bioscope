@@ -15,6 +15,6 @@ public interface RecommenderInterface {
     public void getUserRatings(long userID);
     public void getUserRecommendations(long userID);
     public void getTopTenMovies();
-    public void load();
-    public void write();
+    public void load() throws Exception;
+    public void write() throws Exception;
 }
