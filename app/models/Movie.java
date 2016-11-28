@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.princeton.cs.introcs.In;
+import utils.InsertionSort;
 
 public class Movie {
     private String title, url, releaseDate;
     int id; 
+    Genre genre = new Genre();
+    List<String> genreList = genre.parseData();
     String[] genres;
    
     public Movie(int id, String title, String releaseDate, String url, String[] genres) {
@@ -20,11 +23,20 @@ public class Movie {
     }
     
     @Override
-    public String toString() {       
+    public String toString() { 
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < genres.length; i++) {
+            if(genres[i].equals("1")) {
+                sb.append(" ").append(genreList.get(i)).append(",");
+            }
+        }
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        
         return "Id: " + getId()
         + "; Title: " + getTitle()
         + "; Date: " + getReleaseDate()
         + "; URL: " + getUrl()
+        + "; Genres:" + sb
         + ".";
     }
 
