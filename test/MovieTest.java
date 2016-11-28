@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
+import models.Genre;
 import models.Movie;
 
 // Right BICEP
@@ -31,7 +33,7 @@ public class MovieTest {
     
     // Test basic user information
     @Test
-    public void addMovie() {
+    public void testAddMovie() {
         Movie movie = new Movie(4, "Amelie", "2009", "url", genres);
         assertEquals(movie.getId(), 4);
         assertEquals(movie.getTitle(), "Amelie");

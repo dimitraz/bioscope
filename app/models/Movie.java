@@ -4,14 +4,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Joiner;
+
 import edu.princeton.cs.introcs.In;
-import utils.InsertionSort;
 
 public class Movie {
     private String title, url, releaseDate;
     int id; 
     Genre genre = new Genre();
     List<String> genreList = genre.parseData();
+    List<String> genresIn;
     String[] genres;
    
     public Movie(int id, String title, String releaseDate, String url, String[] genres) {
@@ -20,23 +22,34 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.url = url;
         this.genres = genres;
+        genresIn = convertGenres();
+    }
+    
+    public List<String> convertGenres() {
+        List<String> genresIn = new ArrayList<String>();
+        
+        for(int i = 0; i < genres.length; i++) {
+            if(genres[i].equals("1")) {
+                genresIn.add(genreList.get(i));
+            }
+        }  
+        if(genresIn.size() == 0) {
+            genresIn.add(genreList.get(0));
+        }
+        
+        return genresIn;
     }
     
     @Override
     public String toString() { 
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < genres.length; i++) {
-            if(genres[i].equals("1")) {
-                sb.append(" ").append(genreList.get(i)).append(",");
-            }
-        }
-        sb.deleteCharAt(sb.lastIndexOf(","));
-        
+        Joiner joiner = Joiner.on(", ").skipNulls();
+        String genres = joiner.join(genresIn);
+
         return "Id: " + getId()
         + "; Title: " + getTitle()
         + "; Date: " + getReleaseDate()
         + "; URL: " + getUrl()
-        + "; Genres:" + sb
+        + "; Genres: " + genres
         + ".";
     }
 
@@ -72,10 +85,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public String[] getGenres() {
-        return genres;
+    public List<String> getGenres() {
+        return convertGenres();
     }
 
+    // LOOK AT
     public void setGenres(String[] genres) {
         this.genres = genres;
     }
