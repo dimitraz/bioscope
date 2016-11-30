@@ -1,8 +1,12 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.common.base.Objects;
 
 public class User {
+    private List<Integer> ratings = new ArrayList<>();
     static long counter = 0l;
     public long id;
     private String firstName, lastName, username, gender, email;

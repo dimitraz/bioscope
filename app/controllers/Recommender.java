@@ -55,35 +55,70 @@ public class Recommender {
         }   
     }
     
+    private static void parseRatings() throws Exception {
+        File ratingsFile = new File("data/ratings5.dat");
+        In ratings = new In(ratingsFile);
+        // each field is separated(delimited) by a '|'
+        String delims = "[|]";
+        while (!ratings.isEmpty()) {
+            String ratingsDetails = ratings.readLine();
+            String[] ratingsTokens = ratingsDetails.split(delims);
+
+            if (ratingsTokens.length == 4) {
+                Rating rating = new Rating(Long.parseLong(ratingsTokens[0]), Long.parseLong(ratingsTokens[1]), Integer.parseInt(ratingsTokens[2]));
+                System.out.println(rating);
+            } 
+            else {
+                throw new Exception("Invalid member length: " + ratingsTokens.length);
+            }
+        }        
+    }
+    
     public static void main(String[] args) {
         File datastore = new File("datastore.json");
         SerializerInterface serializer = new JSONSerializer(datastore);
         RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
+        // Parse Movies
         try {
             parseMovies();
         } catch (Exception e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         } 
         
+        // Load data
         try {
-            //parseData(recommenderAPI);
-            recommenderAPI.load();
-        } catch (Exception e) {
+            // recommenderAPI.load();
+        } 
+        catch (Exception e) {
+        }
+        
+        // Parse Users
+        try {
+            parseUsers(recommenderAPI);
+        }
+        catch(Exception e) {
+ 
+        }
+        
+        // Parse Ratings
+        try { 
+            parseRatings();
+        }
+        catch (Exception e) {
         }
 
+        // Display users
         Collection<User> users = recommenderAPI.getUsers();
         for (User u : users) {
             System.out.println(u);
         }
         
+        // Write to file
         try {
             recommenderAPI.write();
         } 
         catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } 
     }
 }
