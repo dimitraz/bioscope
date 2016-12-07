@@ -2,6 +2,7 @@ package controllers;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import models.Movie;
 import models.User;
@@ -16,7 +17,7 @@ public interface RecommenderInterface {
     public void addRating(long userID, long movieID, int rating);
     public Movie getMovie(long movieID);
     public List<Rating> getUserRatings(long userID);
-    public void getUserRecommendations(long userID);
+    public Set<Movie> getUserRecommendations(long userID);
     public List<Movie> getTopTenMovies();
     public void load() throws Exception;
     public void write() throws Exception;

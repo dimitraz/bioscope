@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import models.Movie;
 import models.User;
@@ -128,8 +130,46 @@ public class RecommenderAPI implements RecommenderInterface {
     }
 
     @Override
-    public void getUserRecommendations(long userID) {
-        // TODO Auto-generated method stub
+    public Set<Movie> getUserRecommendations(long userID) {
+        User user = getUser(userID);
+        Collection<User> users = getUsers();
+        List<Rating> userRatings = user.getRatings();
+        List<Integer> list = new ArrayList<>();
+        Set<Movie> recommendList = new HashSet<>();
+        
+        int count = 0;
+        int highest = Integer.MIN_VALUE;
+        User highestUser = null;
+        
+        for(User u : users) {
+            if(u.getID() != user.getID()) {
+                List<Rating> user2Ratings = u.getRatings();
+                int product = 0;
+                
+                for(Rating r : userRatings) {
+                    for(Rating r2 : user2Ratings) {
+                        if(r.getMovieID() == r2.getMovieID()) {
+                            product += r.getRating()*r2.getRating();
+                        }
+                    }
+                }
+                
+                if(product > highest) {
+                    highest = product;
+                    highestUser = u;
+                }
+            }
+        }
+        Collections.sort(highestUser.getRatings(), new SortRatingsComparator());
+        for(Rating r : highestUser.getRatings()) {
+            for(Rating r2 : userRatings) {
+                if(r.getMovieID() != r2.getMovieID()) {
+                    Movie movie = getMovie(r.movieID);
+                    recommendList.add(movie);
+                }
+            }
+        }
+        return recommendList;
     }
 
     @Override
@@ -138,8 +178,7 @@ public class RecommenderAPI implements RecommenderInterface {
         List<Movie> moviesByRating = new ArrayList<>(movieList.values());
         Collections.sort(moviesByRating, new SortByRatingComparator());
         for(Movie m : moviesByRating) {
-            //System.out.println("\n\n" + m.getTitle() + m.averageRating() + "\n\n");
-            if(topTenMovies.size() < 11) {
+            if(topTenMovies.size() < 10) {
                 topTenMovies.add(m);
             }
         }
@@ -150,6 +189,11 @@ public class RecommenderAPI implements RecommenderInterface {
         public int compare(Movie m1, Movie m2) {
             return Integer.compare(m2.averageRating(), (m1.averageRating()));
         }
-        
+    }
+    
+    public class SortRatingsComparator implements Comparator<Rating> {
+        public int compare(Rating r1, Rating r2) {
+            return Integer.compare(r2.getRating(), (r1.getRating()));
+        }
     }
 }

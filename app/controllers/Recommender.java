@@ -3,6 +3,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+
 import edu.princeton.cs.introcs.In;
 import models.Movie;
 import models.User;
@@ -121,6 +123,14 @@ public class Recommender {
             List<Rating> ratingList = u.getRatings();
             for (Rating r : ratingList) {
                 System.out.println(r);
+            }
+        }
+        
+        for (User u : users) { 
+            System.out.println("\nRecommendations for " + u.getFirstName());
+            Set<Movie> rec = recommenderAPI.getUserRecommendations(u.getID());
+            for (Movie m : rec) {
+                System.out.println(m.getTitle());
             }
         }
         

@@ -9,7 +9,7 @@ import controllers.Rating;
 
 public class User {
     private List<Rating> ratings = new ArrayList<>();
-    static long counter = 0l;
+    static long counter = 1l;
     public long id;
     private String firstName, lastName, username, gender, email;
     private int age;
