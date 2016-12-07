@@ -2,6 +2,10 @@ package controllers;
 
 import java.util.Date;
 
+import com.google.common.base.Objects;
+
+import models.User;
+
 public class Rating {
    long userID, movieID;
    int rating;
@@ -10,7 +14,7 @@ public class Rating {
    public Rating(long userID, long movieID, int rating) {
        this.userID = userID;
        this.movieID = movieID;
-       if(rating < 5 && rating > -5) {
+       if(rating <= 5 && rating >= -5) {
            this.rating = rating;
        }
        else {
@@ -24,6 +28,18 @@ public class Rating {
        + "; Movie ID: " + getMovieID()
        + "; Rating: " + getRating()
        + ".";
+   }
+   
+   @Override
+   public boolean equals(final Object obj) {
+       if (obj instanceof Rating) {
+           final Rating other = (Rating) obj;
+           return Objects.equal(getUserID(), other.getUserID()) 
+                   && Objects.equal(getMovieID(), other.getMovieID())
+                   && Objects.equal(getRating(), other.getRating());
+       } else {
+           return false;
+       }
    }
    
    // Getters and Setters

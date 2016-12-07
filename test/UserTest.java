@@ -36,8 +36,9 @@ public class UserTest {
         assertEquals(user.getLastName(), "Flinstone");
         assertEquals(user.getUsername(), "234");
         assertEquals(user.getGender(), "M");
-        assertEquals(user.getEmail(), "Cartoon@gmail.com");
+        assertEquals(user.getEmail(), "cartoon@gmail.com");
         assertEquals(user.getAge(), 29);
+        assertEquals(user.getID(), 0);
     }
     
     // Test boundary conditions

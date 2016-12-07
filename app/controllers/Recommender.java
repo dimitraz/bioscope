@@ -35,7 +35,7 @@ public class Recommender {
         }
     }
     
-    private static void parseMovies() throws Exception {
+    private static void parseMovies(RecommenderAPI recommenderAPI) throws Exception {
         File moviesFile = new File("data/items5.dat");
         In movies = new In(moviesFile);
         // each field is separated(delimited) by a '|'
@@ -47,7 +47,7 @@ public class Recommender {
             if (movieTokens.length == 23) {
                 String[] genres = {movieTokens[5], movieTokens[6], movieTokens[7], movieTokens[8], movieTokens[9], movieTokens[10], movieTokens[11], movieTokens[12], movieTokens[13], movieTokens[14], movieTokens[15], movieTokens[16], movieTokens[17], movieTokens[18], movieTokens[19], movieTokens[20], movieTokens[21], movieTokens[22]};
                 Movie movie = new Movie(Integer.parseInt(movieTokens[0]), movieTokens[1], movieTokens[2], movieTokens[3], genres);
-                System.out.println(movie);
+                recommenderAPI.addMovie(movie);
             } 
             else {
                 throw new Exception("Invalid member length: " + movieTokens.length);
@@ -55,7 +55,7 @@ public class Recommender {
         }   
     }
     
-    private static void parseRatings() throws Exception {
+    private static void parseRatings(RecommenderAPI recommenderAPI) throws Exception {
         File ratingsFile = new File("data/ratings5.dat");
         In ratings = new In(ratingsFile);
         // each field is separated(delimited) by a '|'
@@ -65,8 +65,8 @@ public class Recommender {
             String[] ratingsTokens = ratingsDetails.split(delims);
 
             if (ratingsTokens.length == 4) {
-                Rating rating = new Rating(Long.parseLong(ratingsTokens[0]), Long.parseLong(ratingsTokens[1]), Integer.parseInt(ratingsTokens[2]));
-                System.out.println(rating);
+                Rating rating = new Rating(Long.parseLong(ratingsTokens[0]), Long.parseLong(ratingsTokens[1]), Integer.parseInt(ratingsTokens[2]));                
+                recommenderAPI.addRating(rating);
             } 
             else {
                 throw new Exception("Invalid member length: " + ratingsTokens.length);
@@ -81,9 +81,8 @@ public class Recommender {
         
         // Parse Movies
         try {
-            parseMovies();
+            parseMovies(recommenderAPI);
         } catch (Exception e1) {
-            e1.printStackTrace();
         } 
         
         // Load data
@@ -103,15 +102,38 @@ public class Recommender {
         
         // Parse Ratings
         try { 
-            parseRatings();
+            parseRatings(recommenderAPI);
+            
         }
         catch (Exception e) {
         }
 
         // Display users
+        System.out.println("Users:");
         Collection<User> users = recommenderAPI.getUsers();
         for (User u : users) {
             System.out.println(u);
+        }
+        
+        // Display user ratings
+        for (User u : users) {
+            System.out.println("\nRatings for " + u.getFirstName());
+            List<Rating> ratingList = u.getRatings();
+            for (Rating r : ratingList) {
+                System.out.println(r);
+            }
+        }
+        
+        System.out.println("\nAll Movies:");
+        Collection<Movie> movies = recommenderAPI.getMovies();
+        for (Movie m : movies) {
+            System.out.println(m);
+        }
+        
+        System.out.println("\nTop ten movies:");
+        List<Movie> topTen = recommenderAPI.getTopTenMovies();
+        for (Movie m : topTen) {
+            System.out.println(m.getTitle() + " " + m.averageRating());
         }
         
         // Write to file

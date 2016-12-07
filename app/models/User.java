@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.google.common.base.Objects;
 
+import controllers.Rating;
+
 public class User {
-    private List<Integer> ratings = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
     static long counter = 0l;
     public long id;
     private String firstName, lastName, username, gender, email;
@@ -147,4 +149,19 @@ public class User {
         }
     }
 
+    public long getID() {
+        return id;
+    }
+    
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+    
+    public void addRating(Rating rating) {
+        ratings.add(rating);
+    }
+    
+    public void addRating(long ID, long movieID, int rating) {
+        ratings.add(new Rating(ID, movieID, rating));
+    }
 }
