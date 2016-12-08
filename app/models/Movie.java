@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 
-import controllers.Rating;
 import edu.princeton.cs.introcs.In;
 
 public class Movie {
     private String title, url, releaseDate;
     long id; 
     Genre genre = new Genre();
+    String[] genres;
     List<String> genreList = genre.parseData();
     List<String> genresIn;
     List<Rating> ratings = new ArrayList<>();
-    String[] genres;
    
     public Movie(long id, String title, String releaseDate, String url, String[] genres) {
         this.id = id;
@@ -27,6 +27,12 @@ public class Movie {
         genresIn = convertGenres();
     }
     
+    /**
+     * Converts genres from a list of numbers (1 for applicable, 
+     * 0 for not applicable) to an array list of genre strings
+     * 
+     * @return genresIn ArrayList of the film's genres
+     */
     public List<String> convertGenres() {
         List<String> genresIn = new ArrayList<String>();
         
@@ -42,6 +48,11 @@ public class Movie {
         return genresIn;
     }
     
+    /** 
+     * Calculates the average rating of the film
+     * 
+     * @return average film rating
+     */
     public int averageRating() {
         int sum = 0;
         for(Rating r : ratings) {
@@ -55,6 +66,7 @@ public class Movie {
         }
     }
     
+    // Movie to string
     @Override
     public String toString() { 
         Joiner joiner = Joiner.on(", ").skipNulls();
@@ -67,7 +79,23 @@ public class Movie {
         + "; Genres: " + genres
         + ".";
     }
+    
+    // Movie equality method
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj instanceof Movie) {
+            final Movie other = (Movie) obj;
+            return Objects.equal(id, other.getId()) 
+                    && Objects.equal(title, other.getTitle())
+                    && Objects.equal(releaseDate, other.getReleaseDate())
+                    && Objects.equal(url, other.getUrl())
+                    && Objects.equal(genres, other.getGenres());
+        } else {
+            return false;
+        }
+    }
 
+    // Getters and Setters
     public String getTitle() {
         return title;
     }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import models.Movie;
+import models.Rating;
 import models.User;
 
 public interface RecommenderInterface {

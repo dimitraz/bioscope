@@ -5,10 +5,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import controllers.Rating;
 import controllers.RecommenderAPI;
 import models.Genre;
 import models.Movie;
+import models.Rating;
 import models.User;
 
 public class RatingTest { 

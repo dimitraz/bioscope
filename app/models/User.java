@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.google.common.base.Objects;
 
-import controllers.Rating;
-
 public class User {
     private List<Rating> ratings = new ArrayList<>();
     static long counter = 1l;
@@ -62,6 +60,19 @@ public class User {
         this.id = counter++;
     }
 
+    /** 
+     * Method to check whether a string contains an 
+     * illegal character
+     * 
+     * @param s string to check
+     * @return boolean 
+     */
+    public boolean containsIllegals(String s) {
+        String[] arr = s.split("[~#@*+%{}<>\\[\\]|\"\\_^]", 2);
+        return arr.length > 1;
+    }
+    
+    // User to string
     @Override
     public String toString() {
         return "Name: " + getFirstName() 
@@ -74,18 +85,13 @@ public class User {
         + ".";
     }
 
-    // Check if strings contain illegal characters
-    public boolean containsIllegals(String s) {
-        String[] arr = s.split("[~#@*+%{}<>\\[\\]|\"\\_^]", 2);
-        return arr.length > 1;
-    }
-
     // User hash code
     @Override
     public int hashCode() {
         return Objects.hashCode(this.id, this.firstName, this.lastName, this.email);
     }
 
+    // User equals method
     @Override
     public boolean equals(final Object obj) {
         if (obj instanceof User) {

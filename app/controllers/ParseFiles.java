@@ -7,6 +7,7 @@ import java.util.Set;
 
 import edu.princeton.cs.introcs.In;
 import models.Movie;
+import models.Rating;
 import models.User;
 import utils.SerializerInterface;
 import utils.JSONSerializer;

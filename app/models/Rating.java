@@ -1,10 +1,8 @@
-package controllers;
+package models;
 
 import java.util.Date;
 
 import com.google.common.base.Objects;
-
-import models.User;
 
 public class Rating {
    long userID, movieID;
@@ -22,6 +20,7 @@ public class Rating {
        }
    }
    
+   // Rating to string
    @Override
    public String toString() { 
        return "User ID: " + getUserID()
@@ -30,13 +29,14 @@ public class Rating {
        + ".";
    }
    
+   // Rating equality
    @Override
    public boolean equals(final Object obj) {
        if (obj instanceof Rating) {
            final Rating other = (Rating) obj;
            return Objects.equal(getUserID(), other.getUserID()) 
-                   && Objects.equal(getMovieID(), other.getMovieID());
-                   // && Objects.equal(getRating(), other.getRating());
+                   && Objects.equal(getMovieID(), other.getMovieID())
+                   && Objects.equal(getRating(), other.getRating());
        } else {
            return false;
        }

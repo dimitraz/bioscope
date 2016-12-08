@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import models.Movie;
+import models.Rating;
 import models.User;
 import utils.SerializerInterface;
 
@@ -164,7 +165,7 @@ public class RecommenderAPI implements RecommenderInterface {
         for(Rating r : highestUser.getRatings()) {
             for(Rating r2 : userRatings) {
                 if((r.getMovieID() != r2.getMovieID()) && (recommendList.size() < 10)) {
-                    Movie movie = getMovie(r.movieID);
+                    Movie movie = getMovie(r.getMovieID());
                     recommendList.add(movie);
                 }
             }
