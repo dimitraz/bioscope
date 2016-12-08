@@ -79,6 +79,7 @@ public class RecommenderAPI implements RecommenderInterface {
         return userIndex.values();
     }
     
+    @Override
     public Collection<Movie> getMovies() {
         return movieList.values();
     }

@@ -10,7 +10,7 @@ public class GenreTest {
     
     @Test
     public void testGenreList() {
-        new Movie(1, "Toy Story", "2009", "url", genres);
+        // new Movie(1, "Toy Story", "2009", "url", genres);
         Genre genre = new Genre();
         assertEquals(genre.parseData().get(0), "unknown");
     }

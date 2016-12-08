@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -22,22 +23,47 @@ import models.Movie;
 //  Existence - Does the value exist (e.g., is non-null, nonzero, present in a set, etc.)?
 //  Cardinality - Are there exactly enough values?
 //  Time (absolute and relative) - Is everything happening in order? At the right time? In time?
-public class MovieTest {
-    private String[] genres;
-    private Movie[] movies = {
-        new Movie(1, "Toy Story", "2009", "url", genres),
-        new Movie(2, "Life Aquatic with Steve Zissou", "2009", "url", genres),
-        new Movie(3, "The Martian", "2009", "url", genres),
-        new Movie(4, "Amelie", "2009", "url", genres)
-    };
-    
+public class MovieTest {;
+
     // Test basic user information
     @Test
     public void testAddMovie() {
-        Movie movie = new Movie(4, "Amelie", "2009", "url", genres);
+        String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "1"};
+        Movie movie = new Movie(4, "Amelie", "2009", "http://", genres);
         assertEquals(movie.getId(), 4);
         assertEquals(movie.getTitle(), "Amelie");
         assertEquals(movie.getReleaseDate(), "2009");
-        assertEquals(movie.getUrl(), "url");
+        assertEquals(movie.getUrl(), "http://");
+    }
+    
+    @Test (expected = IllegalArgumentException.class)
+    public void testIllegalGenreNumber() {
+        String genres[] = {"0", "1"};
+        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+    }
+    
+    @Test
+    public void testConvertGenres() {
+        String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "0"};
+        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        
+        List<String> convertGenres = movie.getGenres(); 
+        assertEquals(convertGenres.get(0), "Adventure");
+        assertEquals(convertGenres.get(1), "Crime");
+        assertEquals(convertGenres.get(2), "Film-Noir");
+        assertEquals(convertGenres.get(3), "Mystery");
+        assertEquals(convertGenres.get(4), "Romance");
+        assertEquals(convertGenres.get(5), "Thriller");
+        assertEquals(convertGenres.get(6), "War");
+        assertEquals(convertGenres.size(), 7);
+    }
+    
+    @Test
+    public void testEquals() {
+        String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "0"};
+        
+        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        Movie movieTwo = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        assertEquals(movie, movieTwo);
     }
 }

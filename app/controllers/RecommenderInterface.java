@@ -14,6 +14,7 @@ public interface RecommenderInterface {
     public User getUser(long userID);
     public User getUserByEmail(String email);
     public Collection<User> getUsers();
+    public Collection<Movie> getMovies();
     public Movie addMovie(long id, String title, String year, String url, String[] genres);
     public void addRating(long userID, long movieID, int rating);
     public Movie getMovie(long movieID);

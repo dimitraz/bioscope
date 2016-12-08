@@ -23,8 +23,13 @@ public class Movie {
         this.title = title;
         this.releaseDate = releaseDate;
         this.url = url;
-        this.genres = genres;
-        genresIn = convertGenres();
+        if(genres.length != 19) {
+            throw new IllegalArgumentException("Exactly 19 genres must be specified; " + genres.length + " were specified.");
+        }
+        else {
+            this.genres = genres;
+            genresIn = convertGenres();
+        }
     }
     
     /**
@@ -82,17 +87,15 @@ public class Movie {
     
     // Movie equality method
     @Override
-    public boolean equals(final Object obj) {
-        if (obj instanceof Movie) {
-            final Movie other = (Movie) obj;
-            return Objects.equal(id, other.getId()) 
-                    && Objects.equal(title, other.getTitle())
-                    && Objects.equal(releaseDate, other.getReleaseDate())
-                    && Objects.equal(url, other.getUrl())
-                    && Objects.equal(genres, other.getGenres());
-        } else {
-            return false;
-        }
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final Movie other = (Movie) obj;
+        return Objects.equal(this.getTitle(), other.getTitle())
+            && Objects.equal(this.getId(), other.getId())
+            && Objects.equal(this.getReleaseDate(), other.getReleaseDate())
+            && Objects.equal(this.getUrl(), other.getUrl())
+            && Objects.equal(this.getGenres(), other.getGenres());
     }
 
     // Getters and Setters
