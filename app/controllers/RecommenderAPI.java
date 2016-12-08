@@ -163,7 +163,7 @@ public class RecommenderAPI implements RecommenderInterface {
         Collections.sort(highestUser.getRatings(), new SortRatingsComparator());
         for(Rating r : highestUser.getRatings()) {
             for(Rating r2 : userRatings) {
-                if(r.getMovieID() != r2.getMovieID()) {
+                if((r.getMovieID() != r2.getMovieID()) && (recommendList.size() < 10)) {
                     Movie movie = getMovie(r.movieID);
                     recommendList.add(movie);
                 }

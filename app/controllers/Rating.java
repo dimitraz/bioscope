@@ -35,8 +35,8 @@ public class Rating {
        if (obj instanceof Rating) {
            final Rating other = (Rating) obj;
            return Objects.equal(getUserID(), other.getUserID()) 
-                   && Objects.equal(getMovieID(), other.getMovieID())
-                   && Objects.equal(getRating(), other.getRating());
+                   && Objects.equal(getMovieID(), other.getMovieID());
+                   // && Objects.equal(getRating(), other.getRating());
        } else {
            return false;
        }

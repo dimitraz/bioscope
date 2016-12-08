@@ -1,0 +1,26 @@
+#{extends 'main.html' /} #{set title:'Welcome to Spacebook' /}
+
+<nav class="ui secondary pointing menu">
+	<div class="right menu">
+		<a class="ui item" href="/signup"> Sign up </a> <a class="ui item"
+			href="/login"> Sign in </a>
+	</div>
+</nav>
+
+<section class="start">
+	<div class="ui two column grid container">
+		<div class="ui left aligned column">
+			<h1>Bioscope</h1>
+		</div>
+		<div class="ui left aligned column">
+			<h5>Some of our members:</h5>
+			#{list items: users, as: 'user'}
+			<h5>
+				<a href="/${user.id}/blog"> &mdash; ${user.firstName}'s page</a>
+			</h5>
+			#{/list}
+		</div>
+	</div>
+</section>
+
+</section>

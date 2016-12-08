@@ -1,0 +1,48 @@
+#{extends 'main.html' /}
+#{set title:'Signup for Spacebook' /}
+
+	<nav class="ui secondary pointing menu">
+	  	<div class="right menu">
+	    	<a class="ui active item" href="/signup"> Sign up  </a>
+	    	<a class="ui item" href="/login"> Sign in </a>
+	  	</div>
+	</nav>
+	
+	<section class="ui ui two column middle aligned centered grid container">
+		<div class="column">
+		<h2>Sign up to Spacebook</h2>
+
+		<form class="ui form account-post" action="/register" method="POST">
+		    <div class="two fields">
+		    	<div class="field">
+		        	<label>First Name</label>
+		        	<input placeholder="First Name" type="text" name="firstName">
+		      	</div>
+		      	<div class="field">
+		        	<label>Last Name</label>
+		        	<input placeholder="Last Name" type="text" name="lastName">
+		      	</div>
+		    </div>
+		    <div class="two fields">
+		    	<div class="field">
+		        	<label>Nationality</label>
+		        	<input placeholder="Nationality" type="text" name="nationality">
+		      	</div>
+		      	<div class="field">
+		     		<label>Age</label>
+		        	<input placeholder="Age" type="text" name="age">
+		      	</div>
+		    </div>    
+		    <div class="field">
+		      	<label>Email</label>
+		      	<input placeholder="Email" type="text" name="email">
+		    </div>
+		    <div class="field">
+		      	<label>Password</label>
+		      	<input type="password" name="password">
+		    </div>
+		    <button class="ui submit button">Sign up</button>
+	 	</form>
+
+		</div>
+</section>  

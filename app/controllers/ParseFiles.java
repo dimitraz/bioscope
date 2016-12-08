@@ -11,7 +11,7 @@ import models.User;
 import utils.SerializerInterface;
 import utils.JSONSerializer;
 
-public class Recommender {
+public class ParseFiles {
     // private static List<User> users = new ArrayList<User>();
     
     private static void parseUsers(RecommenderAPI recommenderAPI) throws Exception {
