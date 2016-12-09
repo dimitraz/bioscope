@@ -23,7 +23,7 @@ public class Movie {
         this.title = title;
         this.releaseDate = releaseDate;
         this.url = url;
-        if(genres.length != 19) {
+        if(genres.length != 18) {
             throw new IllegalArgumentException("Exactly 19 genres must be specified; " + genres.length + " were specified.");
         }
         else {

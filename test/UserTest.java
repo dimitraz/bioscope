@@ -94,4 +94,11 @@ public class UserTest {
 		}
 		assertEquals(users.length, ids.size());
 	}
+	
+	@Test
+	public void testEquals() {
+	    User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
+	    User userTwo = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
+        assertEquals(user, userTwo);
+	}
 }

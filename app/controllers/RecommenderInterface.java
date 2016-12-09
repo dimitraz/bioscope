@@ -16,7 +16,7 @@ public interface RecommenderInterface {
     public Collection<User> getUsers();
     public Collection<Movie> getMovies();
     public Movie addMovie(long id, String title, String year, String url, String[] genres);
-    public void addRating(long userID, long movieID, int rating);
+    public void addRating(long userID, long movieID, int rating) throws Exception;
     public Movie getMovie(long movieID);
     public List<Rating> getUserRatings(long userID);
     public Set<Movie> getUserRecommendations(long userID);

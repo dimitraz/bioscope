@@ -86,11 +86,12 @@ public class ParseFiles {
         try {
             parseMovies(recommenderAPI);
         } catch (Exception e1) {
+            e1.printStackTrace();
         } 
         
         // Load data
         try {
-            // recommenderAPI.load();
+            //recommenderAPI.load();
         } 
         catch (Exception e) {
         }
@@ -100,7 +101,7 @@ public class ParseFiles {
             parseUsers(recommenderAPI);
         }
         catch(Exception e) {
- 
+            e.printStackTrace();
         }
         
         // Parse Ratings
@@ -109,6 +110,7 @@ public class ParseFiles {
             
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
 
         // Display users
@@ -146,6 +148,16 @@ public class ParseFiles {
         for (Movie m : topTen) {
             System.out.println(m.getTitle() + " " + m.averageRating());
         }
+        
+        for (User u : users) { 
+            System.out.println("\nRecommendations for " + u.getFirstName() + " (" + u.getID() + ")");
+            
+            List<Movie> rec = recommenderAPI.getRecommendations(u.getID());
+            for (Movie m : rec) {
+                System.out.println(m.getId() + " " + m.getTitle());
+            }
+        }
+        
         
         // Write to file
         try {

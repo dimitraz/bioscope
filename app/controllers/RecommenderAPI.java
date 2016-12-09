@@ -7,9 +7,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import models.Movie;
 import models.Rating;
@@ -97,21 +99,29 @@ public class RecommenderAPI implements RecommenderInterface {
     }
 
     @Override
-    public void addRating(long userID, long movieID, int rating) {
+    public void addRating(long userID, long movieID, int rating) throws Exception {
         User user = getUser(userID);
         Movie movie = getMovie(movieID);
         if(user != null && movie != null) {
             user.addRating(userID, movieID, rating);
             movie.addRating(userID, movieID, rating);
         }
+        else {
+            if(user == null) throw new Exception("Cannot add rating: user does not exist.");
+            if(movie == null) throw new Exception("Cannot add rating: movie does not exist.");
+        }
     }
     
-    public void addRating(Rating rating) {
+    public void addRating(Rating rating) throws Exception {
         User user = getUser(rating.getUserID());
         Movie movie = getMovie(rating.getMovieID());
         if(user != null && movie != null) {
             user.addRating(rating);
             movie.addRating(rating);
+        }
+        else {
+            if(user == null) throw new Exception("Cannot add rating: user does not exist.");
+            if(movie == null) throw new Exception("Cannot add rating: movie does not exist.");
         }
     }
 
@@ -131,47 +141,79 @@ public class RecommenderAPI implements RecommenderInterface {
         return user.getRatings();
     }
 
-    @Override
     public Set<Movie> getUserRecommendations(long userID) {
-        User user = getUser(userID);
-        Collection<User> users = getUsers();
-        List<Rating> userRatings = user.getRatings();
-        List<Integer> list = new ArrayList<>();
-        Set<Movie> recommendList = new HashSet<>();
+        Set<Movie> movies = new HashSet<>();
+        return movies;
+    }
+    
+    public List<Movie> getRecommendations(long userID) {
+        User user1 = getUser(userID); 
+        User user2 = bestMatchedUser(userID);
+        List<Rating> ratings1 = user1.getRatings();
+        List<Rating> ratings2 = user2.getRatings();
         
-        int count = 0;
-        int highest = Integer.MIN_VALUE;
-        User highestUser = null;
+        List<Long> ids1 = new ArrayList<>();
+        List<Long> ids2 = new ArrayList<>();
+        Set<Long> ids = new HashSet<>();
+        Set<Movie> moviesSet = new HashSet<>(); 
         
-        for(User u : users) {
-            if(u.getID() != user.getID()) {
-                List<Rating> user2Ratings = u.getRatings();
-                int product = 0;
+        // Get movie ids for user 1
+        for(Rating r1 : ratings1) {
+            ids1.add(r1.getMovieID());
+        }
+        
+        // Get movie ids for user 2
+        for(Rating r2: ratings2) {
+            ids2.add(r2.getMovieID());
+        }
                 
-                for(Rating r : userRatings) {
-                    for(Rating r2 : user2Ratings) {
-                        if(r.getMovieID() == r2.getMovieID()) {
-                            product += r.getRating()*r2.getRating();
+        ids.addAll(ids2);
+        // Get movie IDs that user 2 hasn't rated
+        ids.removeAll(ids1);
+        
+        for(Long id : ids) {
+            Movie movie = getMovie(id);
+            moviesSet.add(movie);
+        }
+        
+        List<Movie> moviesList = new ArrayList<>(moviesSet);
+        Collections.sort(moviesList, new SortByRatingComparator());
+        return moviesList;
+    }
+    
+    public User bestMatchedUser(long userID) {
+        User user1 = getUser(userID);               // User 1
+        List<Rating> ratings1 = user1.getRatings(); // User 1's ratings
+        Collection<User> users = getUsers();        // List of all users
+        
+        int product = 0;                            // Dot product 
+        int highestProduct = Integer.MIN_VALUE;     // Highest product so far
+        User highestUser = null;                    // Highest match with user 1
+        
+        for(User user2 : users) {
+            if(!user2.equals(user1)) {
+                List<Rating> ratings2 = user2.getRatings(); // User 2's ratings
+                
+                for(Rating r1 : ratings1) {
+                    for(Rating r2 : ratings2) {
+                        if(r1.getMovieID() == r2.getMovieID()) {
+                            product += r1.getRating()*r2.getRating();
                         }
                     }
                 }
-                
-                if(product > highest) {
-                    highest = product;
-                    highestUser = u;
-                }
             }
-        }
-        Collections.sort(highestUser.getRatings(), new SortRatingsComparator());
-        for(Rating r : highestUser.getRatings()) {
-            for(Rating r2 : userRatings) {
-                if((r.getMovieID() != r2.getMovieID()) && (recommendList.size() < 10)) {
-                    Movie movie = getMovie(r.getMovieID());
-                    recommendList.add(movie);
-                }
+            
+            // If product is the highest so far
+            // Save the user's details
+            if(product > highestProduct) {
+                highestProduct = product;
+                highestUser = user2;
             }
+            
+            // System.out.println(product + " " + user2.getFirstName());
         }
-        return recommendList;
+        System.out.println("Highest: " + highestProduct + " " + highestUser.getFirstName());
+        return highestUser;
     }
 
     @Override

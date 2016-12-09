@@ -91,17 +91,17 @@ public class User {
         return Objects.hashCode(this.id, this.firstName, this.lastName, this.email);
     }
 
-    // User equals method
-    @Override
-    public boolean equals(final Object obj) {
-        if (obj instanceof User) {
-            final User other = (User) obj;
-            return Objects.equal(firstName, other.firstName) 
-                    && Objects.equal(lastName, other.lastName)
-                    && Objects.equal(email, other.email);
-        } else {
-            return false;
-        }
+    // User equals method    
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        final User other = (User) obj;
+        return Objects.equal(this.getFirstName(), other.getFirstName())
+            && Objects.equal(this.getLastName(), other.getLastName())
+            && Objects.equal(this.getUsername(), other.getUsername())
+            && Objects.equal(this.getGender(), other.getGender())
+            && Objects.equal(this.getEmail(), other.getEmail())
+            && Objects.equal(this.getAge(), other.getAge());
     }
 
     // Getters and Setters

@@ -45,7 +45,7 @@ public class RatingTest {
     }
     
     @Test
-    public void testBoundaryRatings() {
+    public void testBoundaryRatings() throws Exception {
         Rating rating = new Rating(0, 1, -5);
         Rating ratingTwo = new Rating (0, 2, -5);
         
