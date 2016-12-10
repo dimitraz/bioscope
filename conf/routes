@@ -5,6 +5,9 @@
 # Home page
 GET     /                                       Home.index
 
+# Movie page
+GET		/movies/{id}							Movies.index
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

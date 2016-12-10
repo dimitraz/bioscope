@@ -11,8 +11,8 @@ import models.*;
 public class Home extends Controller {
     RecommenderAPI recommenderAPI;
     
-    public static void index() {
-        File datastore = new File("datastore.json");
+    public static RecommenderAPI recommenderAPI() {
+        File datastore = new File("datastoreLarge.json");
         SerializerInterface serializer = new JSONSerializer(datastore);
         RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
@@ -23,11 +23,15 @@ public class Home extends Controller {
             Logger.info("Failure occurred");
         }
         
-        Collection<User> users = recommenderAPI.getUsers();
-        render(users);
-        
-        List<Movie> topTen = recommenderAPI.getTopTenMovies();
+        return recommenderAPI;
+    }
+    
+    public static void index() {
+        Collection<Movie> topTen = recommenderAPI().getTopTenMovies();
         render(topTen);
     }
-
+    
+    public static Collection<User> getUsers() {
+        return recommenderAPI().getUsers();
+    }
 }

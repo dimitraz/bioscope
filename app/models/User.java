@@ -11,6 +11,7 @@ public class User {
     public long id;
     private String firstName, lastName, username, gender, email;
     private int age;
+    public boolean loggedIn;
 
     public User(String firstName, String lastName, String username, String gender, String email, int age) {
         if (firstName.isEmpty() || containsIllegals(firstName)) {
@@ -36,7 +37,7 @@ public class User {
         if (username.isEmpty() || containsIllegals(username)) {
             throw new IllegalArgumentException();
         } else {
-            if (lastName.length() > 9) {
+            if (username.length() > 9) {
                 this.username = username.substring(0, 9);
             } else {
                 this.username = username;

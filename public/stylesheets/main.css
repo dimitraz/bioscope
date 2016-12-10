@@ -1,0 +1,38 @@
+body {
+	font-family: 'Inconsolata', monospace;
+	background: #000;
+	color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6, a {
+	font-family: 'Inconsolata', monospace;
+}
+
+a, a:hover, .ui.menu .item { 
+	color: #c0392b;
+}
+
+.ui.secondary.pointing.menu {
+	padding: 2em;
+	margin: 0;
+	border: none;
+}
+
+.ui.secondary.pointing.menu h2 {
+	margin: 0;
+	padding: 0;
+	-webkit-margin-after: 0;
+}
+
+.ui.secondary.pointing.menu .item a {
+	color: #fff;
+}
+.column, .ui.grid > .row > .black.column {
+	background-size: cover;
+	margin: 0 !important;
+}
+
+.row {
+	margin: 0;
+	padding: 0 !important;
+}

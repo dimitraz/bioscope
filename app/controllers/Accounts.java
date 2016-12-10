@@ -6,7 +6,6 @@ import java.util.*;
 import models.*;
 
 public class Accounts extends Controller {
-     // RecommenderAPI recommenderAPI;
     
   public static void signup() {
 	  render();
@@ -18,8 +17,8 @@ public class Accounts extends Controller {
 
   public static void logout() {
 	  User user = getLoggedInUser();
-	  //user.loggedIn = false;
-	  //user.save();
+	  user.loggedIn = false;
+
 	  session.clear();
 	  index();
   }
@@ -33,7 +32,7 @@ public class Accounts extends Controller {
 	  User user = null;
 	  if (session.contains("logged_in_userid")) {
 		  String userId = session.get("logged_in_userid");
-		  //user = User.findById(Long.parseLong(userId));
+		  user = Home.recommenderAPI().getUser(Long.parseLong(userId));
 	  } else {
 		  login();
 	  }
@@ -42,8 +41,8 @@ public class Accounts extends Controller {
   
   public static void register(String firstName, String lastName, int age, String nationality, String email, String password, String password2) {
 	  Logger.info(firstName + " " + lastName + " " + email + " " + password);
-	  //User user = new User(firstName, lastName, email, password, age, nationality);
-	  //user.save();
+	  User user = new User(firstName, lastName, email, password, age, nationality);
+
 	  index();
   }
 

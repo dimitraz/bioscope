@@ -16,7 +16,7 @@ public class ParseFiles {
     // private static List<User> users = new ArrayList<User>();
     
     private static void parseUsers(RecommenderAPI recommenderAPI) throws Exception {
-        File usersFile = new File("data/users5.dat");
+        File usersFile = new File("data/users.dat");
         In inUsers = new In(usersFile);
         // each field is separated(delimited) by a '|'
         String delims = "[|]";
@@ -39,7 +39,7 @@ public class ParseFiles {
     }
     
     private static void parseMovies(RecommenderAPI recommenderAPI) throws Exception {
-        File moviesFile = new File("data/items5.dat");
+        File moviesFile = new File("data/items.dat");
         In movies = new In(moviesFile);
         // each field is separated(delimited) by a '|'
         String delims = "[|]";
@@ -49,7 +49,7 @@ public class ParseFiles {
 
             if (movieTokens.length == 23) {
                 String[] genres = {movieTokens[5], movieTokens[6], movieTokens[7], movieTokens[8], movieTokens[9], movieTokens[10], movieTokens[11], movieTokens[12], movieTokens[13], movieTokens[14], movieTokens[15], movieTokens[16], movieTokens[17], movieTokens[18], movieTokens[19], movieTokens[20], movieTokens[21], movieTokens[22]};
-                Movie movie = new Movie(Integer.parseInt(movieTokens[0]), movieTokens[1], movieTokens[2], movieTokens[3], genres);
+                Movie movie = new Movie(Long.parseLong(movieTokens[0]), movieTokens[1], movieTokens[2], movieTokens[3], genres);
                 recommenderAPI.addMovie(movie);
             } 
             else {
@@ -59,7 +59,7 @@ public class ParseFiles {
     }
     
     private static void parseRatings(RecommenderAPI recommenderAPI) throws Exception {
-        File ratingsFile = new File("data/ratings5.dat");
+        File ratingsFile = new File("data/ratings.dat");
         In ratings = new In(ratingsFile);
         // each field is separated(delimited) by a '|'
         String delims = "[|]";
@@ -78,20 +78,20 @@ public class ParseFiles {
     }
     
     public static void main(String[] args) {
-        File datastore = new File("datastore.json");
+        File datastore = new File("datastoreLarge.json");
         SerializerInterface serializer = new JSONSerializer(datastore);
         RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
         // Parse Movies
         try {
-            parseMovies(recommenderAPI);
+           parseMovies(recommenderAPI);
         } catch (Exception e1) {
             e1.printStackTrace();
         } 
         
         // Load data
         try {
-            //recommenderAPI.load();
+            // recommenderAPI.load();
         } 
         catch (Exception e) {
         }
@@ -106,7 +106,7 @@ public class ParseFiles {
         
         // Parse Ratings
         try { 
-            parseRatings(recommenderAPI);
+           parseRatings(recommenderAPI);
             
         }
         catch (Exception e) {
@@ -129,19 +129,11 @@ public class ParseFiles {
             }
         }
         
-        for (User u : users) { 
-            System.out.println("\nRecommendations for " + u.getFirstName());
-            Set<Movie> rec = recommenderAPI.getUserRecommendations(u.getID());
-            for (Movie m : rec) {
-                System.out.println(m.getTitle());
-            }
-        }
-        
-        System.out.println("\nAll Movies:");
+        /*System.out.println("\nAll Movies:");
         Collection<Movie> movies = recommenderAPI.getMovies();
         for (Movie m : movies) {
             System.out.println(m);
-        }
+        }*/
         
         System.out.println("\nTop ten movies:");
         List<Movie> topTen = recommenderAPI.getTopTenMovies();
@@ -152,7 +144,7 @@ public class ParseFiles {
         for (User u : users) { 
             System.out.println("\nRecommendations for " + u.getFirstName() + " (" + u.getID() + ")");
             
-            List<Movie> rec = recommenderAPI.getRecommendations(u.getID());
+            List<Movie> rec = recommenderAPI.getUserRecommendations(u.getID());
             for (Movie m : rec) {
                 System.out.println(m.getId() + " " + m.getTitle());
             }

@@ -1,26 +1,43 @@
-#{extends 'main.html' /} #{set title:'Welcome to Spacebook' /}
+#{extends 'main.html' /} #{set title:'Bioscope' /}
 
-<nav class="ui secondary pointing menu">
-	<div class="right menu">
-		<a class="ui item" href="/signup"> Sign up </a> <a class="ui item"
-			href="/login"> Sign in </a>
-	</div>
-</nav>
-
-<section class="start">
-	<div class="ui two column grid container">
-		<div class="ui left aligned column">
-			<h1>Bioscope</h1>
+	<nav class="ui secondary pointing menu">
+		<div class="left menu">
+			<h2>Bioscope</h2>
 		</div>
-		<div class="ui left aligned column">
-			<h5>Some of our members:</h5>
-			#{list items: users, as: 'user'}
-			<h5>
-				<a href="/${user.id}/blog"> &mdash; ${user.firstName}'s page</a>
-			</h5>
-			#{/list}
+		<div class="right menu">
+			<a class="ui item" href="/signup"> Sign up </a> <a class="ui item"
+				href="/login"> Sign in </a>
 		</div>
-	</div>
-</section>
-
-</section>
+	</nav>
+	
+	<section class="topTen">
+		<div class="ui two column center aligned padded grid">
+		%{
+			index = 0;
+     		for(movie in topTen) { 
+     			if(index % 2 == 0) {
+		}%
+				<div class="row">
+					<div class="column" style="background: url(/public/images/${movie.id}.jpg); background-size: cover;"></div>
+					<div class="black column" style="padding: 15em 0;">
+						<h3>${movie.title}</h3>
+						<a href="/movies/${movie.id}">rate movie</a>
+					</div>
+				</div>
+		%{
+				}
+				else {
+		}%
+				<div class="row">
+					<div class="black column" style="padding: 15em 5em;">
+						<h3>${movie.title}</h3>
+					</div>
+					<div class="column" style="background: url(/public/images/${movie.id}.jpg) center center;"></div>
+				</div>
+		%{
+				}
+				index++;
+		     }
+		}%
+		</div>
+	</section>

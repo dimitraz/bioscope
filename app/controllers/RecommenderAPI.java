@@ -37,10 +37,12 @@ public class RecommenderAPI implements RecommenderInterface {
         serializer.read();
         emailIndex = (Map<String, User>) serializer.pop();
         userIndex = (Map<Long, User>) serializer.pop();
+        movieList = (Map<Long, Movie>) serializer.pop();
     }
 
     @Override
     public void write() throws Exception {
+        serializer.push(movieList);
         serializer.push(userIndex);
         serializer.push(emailIndex);
         serializer.write();
@@ -120,7 +122,7 @@ public class RecommenderAPI implements RecommenderInterface {
             movie.addRating(rating);
         }
         else {
-            if(user == null) throw new Exception("Cannot add rating: user does not exist.");
+            if(user == null) throw new Exception("Cannot add rating: user " + rating.getUserID() + " does not exist.");
             if(movie == null) throw new Exception("Cannot add rating: movie does not exist.");
         }
     }
@@ -140,13 +142,8 @@ public class RecommenderAPI implements RecommenderInterface {
         User user = getUser(userID);
         return user.getRatings();
     }
-
-    public Set<Movie> getUserRecommendations(long userID) {
-        Set<Movie> movies = new HashSet<>();
-        return movies;
-    }
     
-    public List<Movie> getRecommendations(long userID) {
+    public List<Movie> getUserRecommendations(long userID) {
         User user1 = getUser(userID); 
         User user2 = bestMatchedUser(userID);
         List<Rating> ratings1 = user1.getRatings();
@@ -172,8 +169,13 @@ public class RecommenderAPI implements RecommenderInterface {
         ids.removeAll(ids1);
         
         for(Long id : ids) {
-            Movie movie = getMovie(id);
-            moviesSet.add(movie);
+            if(moviesSet.size() < 10) {
+                Movie movie = getMovie(id);
+                moviesSet.add(movie);
+            }
+            else {
+                break;
+            }
         }
         
         List<Movie> moviesList = new ArrayList<>(moviesSet);
@@ -212,7 +214,7 @@ public class RecommenderAPI implements RecommenderInterface {
             
             // System.out.println(product + " " + user2.getFirstName());
         }
-        System.out.println("Highest: " + highestProduct + " " + highestUser.getFirstName());
+        // System.out.println("Highest: " + highestProduct + " " + highestUser.getFirstName());
         return highestUser;
     }
 
@@ -221,9 +223,13 @@ public class RecommenderAPI implements RecommenderInterface {
         List<Movie> topTenMovies = new ArrayList<>();
         List<Movie> moviesByRating = new ArrayList<>(movieList.values());
         Collections.sort(moviesByRating, new SortByRatingComparator());
+        
         for(Movie m : moviesByRating) {
             if(topTenMovies.size() < 10) {
                 topTenMovies.add(m);
+            }
+            else {
+                break;
             }
         }
         return topTenMovies;
