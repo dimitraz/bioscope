@@ -44,7 +44,7 @@
 				<h2>Movies rated by you:</h2> <br /> 
 				<ul>
 				#{list items: user.getRatings(), as: 'rating'} 
-					<li><a href="/movies/${rating.movieId}">${api.getMovie(rating.movieId).getTitle()}</a> &rsaquo; ${rating.rating}</li>
+					<li><a href="/movies/${rating.movieId}">${rating.movieId}</a> &rsaquo; ${rating.rating}</li>
 				#{/list}
 				</ul>
 			</div>

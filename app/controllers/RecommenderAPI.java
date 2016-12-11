@@ -35,20 +35,20 @@ public class RecommenderAPI implements RecommenderInterface {
     @SuppressWarnings("unchecked")
     public void load() throws Exception {
         serializer.read();
+        User.counter = (long) serializer.pop();
+        Movie.counter = (long) serializer.pop();
         usernameIndex = (Map<String, User>) serializer.pop();
         userIndex = (Map<Long, User>) serializer.pop();
         movieList = (Map<Long, Movie>) serializer.pop();
-        User.counter = (long) serializer.pop();
-        Movie.counter = (long) serializer.pop();
     }
 
     @Override
     public void write() throws Exception {
-        serializer.push(Movie.counter);
-        serializer.push(User.counter);
         serializer.push(movieList);
         serializer.push(userIndex);
         serializer.push(usernameIndex);
+        serializer.push(Movie.counter);
+        serializer.push(User.counter);
         serializer.write();
     }
 

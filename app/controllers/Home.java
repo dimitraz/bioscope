@@ -23,6 +23,6 @@ public class Home extends Controller {
         Collection<Movie> topTen = Accounts.recommenderAPI().getTopTenMovies();
         
         RecommenderAPI api = Accounts.recommenderAPI();
-        render(user, movies, topTen, ratedMovies, api);
+        render(user, movies, topTen, ratedMovies);
     }
 }

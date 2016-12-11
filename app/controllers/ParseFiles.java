@@ -117,18 +117,26 @@ public class ParseFiles {
         SerializerInterface serializer = new JSONSerializer(datastore);
         RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
+        load(recommenderAPI);
+        // write(recommenderAPI);
+        // display(recommenderAPI);
+    }
+    
+    public static void load(RecommenderAPI recommenderAPI) {
         // Load data
         try {
-            recommenderAPI.load();
+           recommenderAPI.load();
         } 
         catch (Exception e) {
             System.out.println("Unable to load file.");
             e.printStackTrace();   
-        }
-        
+        }   
+    }
+    
+    public static void write(RecommenderAPI recommenderAPI) {      
         // Parse Movies
         try {
-           // parseMovies(recommenderAPI);
+             parseMovies(recommenderAPI);
         } catch (Exception e) {
             System.out.println("Unable to parse movies.");
             e.printStackTrace();
@@ -136,7 +144,7 @@ public class ParseFiles {
         
         // Parse Users
         try {
-           // parseUsers(recommenderAPI);
+            parseUsers(recommenderAPI);
         }
         catch(Exception e) {
             System.out.println("Unable to parse users.");
@@ -145,15 +153,26 @@ public class ParseFiles {
         
         // Parse Ratings
         try { 
-          //  parseRatings(recommenderAPI);
+            parseRatings(recommenderAPI);
             
         }
         catch (Exception e) {
             System.out.println("Unable to parse ratings.");
             e.printStackTrace();
         }
-
-        // Display users
+        
+        // Write to file
+        try {
+            recommenderAPI.write();
+        } 
+        catch (Exception e) {
+            System.out.println("Unable to write to file.");
+            e.printStackTrace();
+        } 
+    }
+    
+    public static void display(RecommenderAPI recommenderAPI) {
+     // Display users
         System.out.println("Users:");
         Collection<User> users = recommenderAPI.getUsers();
         for (User u : users) {
@@ -161,19 +180,19 @@ public class ParseFiles {
         }
         
         // Display user ratings
-        /*for (User u : users) {
+        for (User u : users) {
             System.out.println("\nRatings for " + u.getFirstName());
             List<Rating> ratingList = u.getRatings();
             for (Rating r : ratingList) {
                 System.out.println(r);
             }
         }
-        */
-        /*System.out.println("\nAll Movies:");
+        
+        System.out.println("\nAll Movies:");
         Collection<Movie> movies = recommenderAPI.getMovies();
         for (Movie m : movies) {
             System.out.println(m);
-        }*/
+        }
         
         System.out.println("\nTop ten movies:");
         List<Movie> topTen = recommenderAPI.getTopTenMovies();
@@ -181,22 +200,13 @@ public class ParseFiles {
             System.out.println(m.getTitle() + " " + m.averageRating());
         }
         
-        /*for (User u : users) { 
-            System.out.println("\nRecommendations for " + u.getFirstName() + " (" + u.getID() + ")");
+        for (User u : users) { 
+            System.out.println("\nRecommendations for " + u.getFirstName() + " (" + u.getId() + ")");
             
-            List<Movie> rec = recommenderAPI.getUserRecommendations(u.getID());
+            List<Movie> rec = recommenderAPI.getUserRecommendations(u.getId());
             for (Movie m : rec) {
                 System.out.println(m.getId() + " " + m.getTitle());
             }
-        }*/
-        
-        // Write to file
-        try {
-            // recommenderAPI.write();
-        } 
-        catch (Exception e) {
-            System.out.println("Unable to write to file.");
-            e.printStackTrace();
-        } 
+        }   
     }
 }

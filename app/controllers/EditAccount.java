@@ -22,4 +22,12 @@ public class EditAccount extends Controller {
         User user = Accounts.getLoggedInUser();
         render(user);
     }
+    
+    public static void delete() {
+        User user = Accounts.getLoggedInUser();
+        Accounts.recommenderAPI().removeUser(user.getId());
+        Accounts.save();
+        
+        Accounts.index();
+    }
 }

@@ -19,6 +19,7 @@ POST   /register                                Accounts.register
 # Edit Account
 GET 	/editaccount							EditAccount.index
 POST 	/editaccount/change						EditAccount.change
+GET		/editaccount/delete						EditAccount.delete
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
