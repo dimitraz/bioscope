@@ -1,11 +1,13 @@
 package controllers;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import edu.princeton.cs.introcs.In;
+import exceptions.GenreLengthException;
 import models.Movie;
 import models.Rating;
 import models.User;
@@ -13,32 +15,54 @@ import utils.SerializerInterface;
 import utils.JSONSerializer;
 
 public class ParseFiles {
-    // private static List<User> users = new ArrayList<User>();
     
-    private static void parseUsers(RecommenderAPI recommenderAPI) throws Exception {
+    /** 
+     * Method to read in and parse a list of users 
+     * and their details, in the format:
+     * 
+     * user id | first name | last name | age | gender |
+     *  occupation | zip code
+     *  
+     * Only first name, last name and age are used.
+     * 
+     * @param recommenderAPI
+     * @throws IOException
+     */
+    private static void parseUsers(RecommenderAPI recommenderAPI) throws IOException {
         File usersFile = new File("data/users.dat");
         In inUsers = new In(usersFile);
-        // each field is separated(delimited) by a '|'
+
         String delims = "[|]";
         while (!inUsers.isEmpty()) {
-            // get user and rating from data source
             String userDetails = inUsers.readLine();
-
-            // parse user details string
             String[] userTokens = userDetails.split(delims);
 
-            // output user data to console.
             if (userTokens.length == 7) {
                 User user = new User(userTokens[1], userTokens[2], userTokens[1] + userTokens[2], "N0lan123", Integer.parseInt(userTokens[3]));
                 recommenderAPI.addUser(user);
             } 
             else {
-                throw new Exception("Invalid member length: " + userTokens.length);
+                throw new IOException("Invalid member length: " + userTokens.length);
             }
         }
     }
     
-    private static void parseMovies(RecommenderAPI recommenderAPI) throws Exception {
+    /** 
+     * Method to read in and parse a list of movies and 
+     * movie details, in the format: 
+     * 
+     * movie id | movie title (release year) | release date | 
+     * IMDb URL | {genres}
+     * 
+     * The last 19 fields are the genres, a 1 indicates the movie
+     * is of that genre, a 0 indicates it is not; movies can be in 
+     * several genres at once.
+     * 
+     * @param recommenderAPI
+     * @throws IOException
+     * @throws GenreLengthException 
+     */
+    private static void parseMovies(RecommenderAPI recommenderAPI) throws IOException, GenreLengthException {
         File moviesFile = new File("data/items.dat");
         In movies = new In(moviesFile);
         // each field is separated(delimited) by a '|'
@@ -49,16 +73,26 @@ public class ParseFiles {
 
             if (movieTokens.length == 23) {
                 String[] genres = {movieTokens[5], movieTokens[6], movieTokens[7], movieTokens[8], movieTokens[9], movieTokens[10], movieTokens[11], movieTokens[12], movieTokens[13], movieTokens[14], movieTokens[15], movieTokens[16], movieTokens[17], movieTokens[18], movieTokens[19], movieTokens[20], movieTokens[21], movieTokens[22]};
-                Movie movie = new Movie(Long.parseLong(movieTokens[0]), movieTokens[1], movieTokens[2], movieTokens[3], genres);
+                Movie movie = new Movie(movieTokens[1], movieTokens[2], movieTokens[3], genres);
                 recommenderAPI.addMovie(movie);
             } 
             else {
-                throw new Exception("Invalid member length: " + movieTokens.length);
+                throw new IOException("Invalid member length: " + movieTokens.length);
             }
         }   
     }
     
-    private static void parseRatings(RecommenderAPI recommenderAPI) throws Exception {
+    /** 
+     * Method to read in and parse a list of ratings
+     * in the format:
+     * 
+     * user id | item id | rating | timestamp
+     * The timestamp parameter is not used.
+     * 
+     * @param recommenderAPI
+     * @throws Exception
+     */
+    private static void parseRatings(RecommenderAPI recommenderAPI) throws Exception, IOException {
         File ratingsFile = new File("data/ratings.dat");
         In ratings = new In(ratingsFile);
         // each field is separated(delimited) by a '|'
@@ -72,11 +106,12 @@ public class ParseFiles {
                 recommenderAPI.addRating(rating);
             } 
             else {
-                throw new Exception("Invalid member length: " + ratingsTokens.length);
+                throw new IOException("Invalid member length: " + ratingsTokens.length);
             }
         }        
     }
     
+    // Display all parsed data
     public static void main(String[] args) {
         File datastore = new File("datastoreLarge.json");
         SerializerInterface serializer = new JSONSerializer(datastore);

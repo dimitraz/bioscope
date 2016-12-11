@@ -1,3 +1,4 @@
+package models;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
@@ -34,10 +35,8 @@ public class UserTest {
         User user = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(user.getFirstName(), "Fred");
         assertEquals(user.getLastName(), "Flinstone");
-        assertEquals(user.getUsername(), "234");
         assertEquals(user.getUsername(), "freddy");
         assertEquals(user.getAge(), 29);
-        assertEquals(user.getId(), 0);
     }
     
     // Test boundary conditions
@@ -60,7 +59,8 @@ public class UserTest {
 
     @Test
     public void testUserExistence() {
-        fail("Not yet implemented");
+        User user = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
+        assertNotNull(user);
     }
 
     @Test (expected = IllegalArgumentException.class) 
@@ -73,12 +73,13 @@ public class UserTest {
     	User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
     	assertEquals(user.getFirstName(), "Hansel-An");
     	assertEquals(user.getLastName(), "CharlieAn");
-    	assertEquals(user.getUsername(), "WillyWonk");	
+    	assertEquals(user.getUsername(), "willywonka");	
     }
     
     @Test
-    public void validEmail() {
-        fail("Not yet implemented");
+    public void testUsernameCase() {
+        User user = new User("Fred", "Flinstone", "Freddy", "Secret123", 29);
+        assertEquals(user.getUsername(), "freddy");
     }
     
 	@Test
@@ -91,7 +92,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void testEquals() {
+	public void testUserEquality() {
 	    User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
 	    User userTwo = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
         assertEquals(user, userTwo);

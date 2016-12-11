@@ -1,3 +1,4 @@
+package models;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
@@ -6,6 +7,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import exceptions.GenreLengthException;
 import models.Genre;
 import models.Movie;
 
@@ -27,25 +29,25 @@ public class MovieTest {;
 
     // Test basic user information
     @Test
-    public void testAddMovie() {
+    public void testAddMovie() throws GenreLengthException {
         String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "1"};
-        Movie movie = new Movie(4, "Amelie", "2009", "http://", genres);
+        Movie movie = new Movie("Amelie", "2009", "http://", genres);
         assertEquals(movie.getId(), 4);
         assertEquals(movie.getTitle(), "Amelie");
         assertEquals(movie.getReleaseDate(), "2009");
         assertEquals(movie.getUrl(), "http://");
     }
     
-    @Test (expected = IllegalArgumentException.class)
-    public void testIllegalGenreNumber() {
+    @Test (expected = GenreLengthException.class)
+    public void testIllegalGenreNumber() throws GenreLengthException {
         String genres[] = {"0", "1"};
-        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        Movie movie = new Movie("Kill Your Darlings", "2010", "http://", genres);
     }
     
     @Test
-    public void testConvertGenres() {
+    public void testConvertGenres() throws GenreLengthException {
         String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "0"};
-        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        Movie movie = new Movie("Kill Your Darlings", "2010", "http://", genres);
         
         List<String> convertGenres = movie.getGenres(); 
         assertEquals(convertGenres.get(0), "Adventure");
@@ -59,11 +61,11 @@ public class MovieTest {;
     }
     
     @Test
-    public void testEquals() {
+    public void testEquals() throws GenreLengthException {
         String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "0"};
         
-        Movie movie = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
-        Movie movieTwo = new Movie(0, "Kill Your Darlings", "2010", "http://", genres);
+        Movie movie = new Movie("Kill Your Darlings", "2010", "http://", genres);
+        Movie movieTwo = new Movie("Kill Your Darlings", "2010", "http://", genres);
         assertEquals(movie, movieTwo);
     }
 }

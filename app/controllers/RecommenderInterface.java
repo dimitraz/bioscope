@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import exceptions.GenreLengthException;
 import models.Movie;
 import models.Rating;
 import models.User;
@@ -15,7 +16,7 @@ public interface RecommenderInterface {
     public User getUserByUsername(String username);
     public Collection<User> getUsers();
     public Collection<Movie> getMovies();
-    public Movie addMovie(long id, String title, String year, String url, String[] genres);
+    public Movie addMovie(String title, String year, String url, String[] genres) throws GenreLengthException;
     public void addRating(long userID, long movieID, int rating) throws Exception;
     public Movie getMovie(long movieID);
     public List<Rating> getUserRatings(long userID);

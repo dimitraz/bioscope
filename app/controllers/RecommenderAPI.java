@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import exceptions.GenreLengthException;
 import models.Movie;
 import models.Rating;
 import models.User;
@@ -22,7 +23,6 @@ public class RecommenderAPI implements RecommenderInterface {
     public Map<Long, User> userIndex = new HashMap<>();
     public Map<String, User> usernameIndex = new HashMap<>();
     public Map<Long, Movie> movieList = new HashMap<>();
-  
     private SerializerInterface serializer;
 
     public RecommenderAPI() {
@@ -39,10 +39,12 @@ public class RecommenderAPI implements RecommenderInterface {
         userIndex = (Map<Long, User>) serializer.pop();
         movieList = (Map<Long, Movie>) serializer.pop();
         User.counter = (long) serializer.pop();
+        Movie.counter = (long) serializer.pop();
     }
 
     @Override
     public void write() throws Exception {
+        serializer.push(Movie.counter);
         serializer.push(User.counter);
         serializer.push(movieList);
         serializer.push(userIndex);
@@ -91,9 +93,9 @@ public class RecommenderAPI implements RecommenderInterface {
     }
 
     @Override
-    public Movie addMovie(long id, String title, String releaseDate, String url, String[] genres) {
-        Movie movie = new Movie(id, title, releaseDate, url, genres);
-        movieList.put(id, movie);
+    public Movie addMovie(String title, String releaseDate, String url, String[] genres) throws GenreLengthException {
+        Movie movie = new Movie(title, releaseDate, url, genres);
+        movieList.put(movie.getId(), movie);
         return movie;
     }
     
@@ -117,14 +119,14 @@ public class RecommenderAPI implements RecommenderInterface {
     }
     
     public void addRating(Rating rating) throws Exception {
-        User user = getUser(rating.getUserID());
-        Movie movie = getMovie(rating.getMovieID());
+        User user = getUser(rating.getUserId());
+        Movie movie = getMovie(rating.getMovieId());
         if(user != null && movie != null) {
             user.addRating(rating);
             movie.addRating(rating);
         }
         else {
-            if(user == null) throw new Exception("Cannot add rating: user " + rating.getUserID() + " does not exist.");
+            if(user == null) throw new Exception("Cannot add rating: user " + rating.getUserId() + " does not exist.");
             if(movie == null) throw new Exception("Cannot add rating: movie does not exist.");
         }
     }
@@ -158,12 +160,12 @@ public class RecommenderAPI implements RecommenderInterface {
         
         // Get movie ids for user 1
         for(Rating r1 : ratings1) {
-            ids1.add(r1.getMovieID());
+            ids1.add(r1.getMovieId());
         }
         
         // Get movie ids for user 2
         for(Rating r2: ratings2) {
-            ids2.add(r2.getMovieID());
+            ids2.add(r2.getMovieId());
         }
                 
         ids.addAll(ids2);
@@ -200,7 +202,7 @@ public class RecommenderAPI implements RecommenderInterface {
                 
                 for(Rating r1 : ratings1) {
                     for(Rating r2 : ratings2) {
-                        if(r1.getMovieID() == r2.getMovieID()) {
+                        if(r1.getMovieId() == r2.getMovieId()) {
                             product += r1.getRating()*r2.getRating();
                         }
                     }

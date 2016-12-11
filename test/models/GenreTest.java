@@ -1,3 +1,4 @@
+package models;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -10,8 +11,8 @@ public class GenreTest {
     
     @Test
     public void testGenreList() {
-        // new Movie(1, "Toy Story", "2009", "url", genres);
         Genre genre = new Genre();
         assertEquals(genre.parseData().get(0), "unknown");
+        assertEquals(genre.parseData().get(18), "Western");
     }
 }

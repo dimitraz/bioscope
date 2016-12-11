@@ -14,6 +14,10 @@ public class Genre {
     public Genre() {
     }
     
+    /** 
+     * Reads in and parses a list of genres  
+     * @return genreList list of genre strings 
+     */
     public List<String> parseData() { 
         File genreFile = new File("data/genre.dat");
         
@@ -26,8 +30,8 @@ public class Genre {
                 genreList.add(genreTokens[0]);
             }
         }
-        catch(Exception e) {
-            System.out.println("Unable to read genres");
+        catch(IOException e) {
+            System.out.println("Unable to read genres from file: " + genreFile);
         }
         
         return genreList;

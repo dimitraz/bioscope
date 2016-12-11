@@ -8,23 +8,26 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 
 import edu.princeton.cs.introcs.In;
+import exceptions.GenreLengthException;
 
 public class Movie {
+    public static long counter = 1l;
+    private long id;
+    
     private String title, url, releaseDate;
-    long id; 
     Genre genre = new Genre();
     String[] genres;
     List<String> genreList = genre.parseData();
     List<String> genresIn;
     List<Rating> ratings = new ArrayList<>();
    
-    public Movie(long id, String title, String releaseDate, String url, String[] genres) {
-        this.id = id;
+    public Movie(String title, String releaseDate, String url, String[] genres) throws GenreLengthException {
+        this.id = counter++;
         this.title = title;
         this.releaseDate = releaseDate;
         this.url = url;
-        if(genres.length != 18) {
-            throw new IllegalArgumentException("Exactly 19 genres must be specified; " + genres.length + " were specified.");
+        if(genres.length != 19) {
+            throw new GenreLengthException("Exactly 19 genres must be specified; " + genres.length + " were specified.");
         }
         else {
             this.genres = genres;

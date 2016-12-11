@@ -59,6 +59,13 @@ public class User {
         return arr.length > 1;
     }
     
+    /**
+     * Method used for authentication. Returns
+     * true if passwords match and false otherwise
+     * 
+     * @param password
+     * @return boolean 
+     */
     public boolean checkPassword(String password) {
         return this.password.equals(password);
     } 
