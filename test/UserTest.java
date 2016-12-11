@@ -22,40 +22,35 @@ import models.User;
 //  Time (absolute and relative) - Is everything happening in order? At the right time? In time?
 public class UserTest {
 	private User[] users = {
-		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
-		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
-		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29),
-		new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29)
+		new User("Fred", "Flinstone", "freddy", "Secret123", 29),
+		new User("Fred", "Flinstone", "freddy", "Secret123", 29),
+		new User("Fred", "Flinstone", "freddy", "Secret123", 29),
+		new User("Fred", "Flinstone", "freddy", "Secret123", 29),
 	};
 	
     // Test basic user information
     @Test
     public void testNewUser() {
-        User user = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        User user = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(user.getFirstName(), "Fred");
         assertEquals(user.getLastName(), "Flinstone");
         assertEquals(user.getUsername(), "234");
-        assertEquals(user.getGender(), "M");
-        assertEquals(user.getEmail(), "cartoon@gmail.com");
+        assertEquals(user.getUsername(), "freddy");
         assertEquals(user.getAge(), 29);
-        assertEquals(user.getID(), 0);
+        assertEquals(user.getId(), 0);
     }
     
     // Test boundary conditions
     @Test 
     public void testInvalidAge() {
-        User user = new User("Fred", "Flinstone", "234", "M", "Cartoon", -29);
+        User user = new User("Fred", "Flinstone", "freddy", "Secret123", -29);
         assertEquals(user.getAge(), 0);
     }
        
-    @Test 
-    public void testInvalidGender() {
-        User user = new User("Fred", "Flinstone", "234", "MALE", "Cartoon", 29);
-    }
     
     @Test (expected = IllegalArgumentException.class) 
     public void testEmptyName() {
-        User user = new User("", "Flinstone", "234", "M", "Cartoon", 29);
+        User user = new User("", "Flinstone", "freddy", "Secret123", 29);
     }
     
     @Test
@@ -70,12 +65,12 @@ public class UserTest {
 
     @Test (expected = IllegalArgumentException.class) 
     public void testName() {
-    	User user = new User("***", "{}]{|/", "234", "M", "Cartoon", 29);
+    	User user = new User("***", "{}]{|/", "freddy", "Secret123", 29);
     }
 
     @Test 
     public void testStringLimit() {
-    	User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
+    	User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
     	assertEquals(user.getFirstName(), "Hansel-An");
     	assertEquals(user.getLastName(), "CharlieAn");
     	assertEquals(user.getUsername(), "WillyWonk");	
@@ -90,15 +85,15 @@ public class UserTest {
 	public void testIds() {
 		Set<Long> ids = new HashSet<>();
 		for (User user : users) {
-			ids.add(user.id);
+			ids.add(user.getId());
 		}
 		assertEquals(users.length, ids.size());
 	}
 	
 	@Test
 	public void testEquals() {
-	    User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
-	    User userTwo = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "M", "Cartoon", 29);
+	    User user = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
+	    User userTwo = new User("Hansel-And-Gretel", "CharlieAndTheChocolateFactory", "WillyWonka", "123Secret", 29);
         assertEquals(user, userTwo);
 	}
 }

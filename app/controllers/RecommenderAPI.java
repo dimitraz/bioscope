@@ -20,7 +20,7 @@ import utils.SerializerInterface;
 
 public class RecommenderAPI implements RecommenderInterface {
     public Map<Long, User> userIndex = new HashMap<>();
-    public Map<String, User> emailIndex = new HashMap<>();
+    public Map<String, User> usernameIndex = new HashMap<>();
     public Map<Long, Movie> movieList = new HashMap<>();
   
     private SerializerInterface serializer;
@@ -35,37 +35,39 @@ public class RecommenderAPI implements RecommenderInterface {
     @SuppressWarnings("unchecked")
     public void load() throws Exception {
         serializer.read();
-        emailIndex = (Map<String, User>) serializer.pop();
+        usernameIndex = (Map<String, User>) serializer.pop();
         userIndex = (Map<Long, User>) serializer.pop();
         movieList = (Map<Long, Movie>) serializer.pop();
+        User.counter = (long) serializer.pop();
     }
 
     @Override
     public void write() throws Exception {
+        serializer.push(User.counter);
         serializer.push(movieList);
         serializer.push(userIndex);
-        serializer.push(emailIndex);
+        serializer.push(usernameIndex);
         serializer.write();
     }
 
     @Override
-    public User addUser(String firstName, String lastName, String username, String gender, String email, int age) {
-        User user = new User(firstName, lastName, username, gender, email, age);
-        userIndex.put(user.getID(), user);
-        emailIndex.put(email, user);
+    public User addUser(String firstName, String lastName, String username, String password, int age) {
+        User user = new User(firstName, lastName, username, password, age);
+        userIndex.put(user.getId(), user);
+        usernameIndex.put(username, user);
         return user;
     }
     
     public User addUser(User user) {
-        userIndex.put(user.id, user);
-        emailIndex.put(user.getEmail(), user);
+        userIndex.put(user.getId(), user);
+        usernameIndex.put(user.getUsername(), user);
         return user; 
     }
 
     @Override
     public void removeUser(long userID) {
         User user = userIndex.remove(userID);
-        emailIndex.remove(user.getEmail());
+        usernameIndex.remove(user.getUsername());
     }
 
     @Override
@@ -74,8 +76,8 @@ public class RecommenderAPI implements RecommenderInterface {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return emailIndex.get(email);
+    public User getUserByUsername(String username) {
+        return usernameIndex.get(username);
     }
 
     @Override

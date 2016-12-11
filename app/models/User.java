@@ -7,13 +7,13 @@ import com.google.common.base.Objects;
 
 public class User {
     private List<Rating> ratings = new ArrayList<>();
-    static long counter = 1l;
-    public long id;
-    private String firstName, lastName, username, gender, email;
+    public static long counter = 1l;
+    private long id;
+    private String firstName, lastName, username, password;
     private int age;
-    public boolean loggedIn;
+    private boolean loggedIn;
 
-    public User(String firstName, String lastName, String username, String gender, String email, int age) {
+    public User(String firstName, String lastName, String username, String password, int age) {
         if (firstName.isEmpty() || containsIllegals(firstName)) {
             throw new IllegalArgumentException();
         } else {
@@ -34,29 +34,15 @@ public class User {
             }
         }
 
-        if (username.isEmpty() || containsIllegals(username)) {
-            throw new IllegalArgumentException();
-        } else {
-            if (username.length() > 9) {
-                this.username = username.substring(0, 9);
-            } else {
-                this.username = username;
-            }
-        }
-
-        if (gender.equals("F") || gender.equals("M")) {
-            this.gender = gender;
-        } else {
-            this.gender = "U"; // Undefined
-        }
-
-        this.email = email.toLowerCase();
+        this.username = username.toLowerCase();
 
         if (age > 0) {
             this.age = age;
         } else {
             age = 0;
         }
+        
+        this.password = password;
 
         this.id = counter++;
     }
@@ -78,10 +64,8 @@ public class User {
     public String toString() {
         return "Name: " + getFirstName() 
         + "; Last name: " + getLastName() 
-        + "; Username: " + getUsername()
         + "; User ID: " + id 
-        + "; Gender: " + getGender() 
-        + "; Email: " + getEmail() 
+        + "; Username: " + getUsername() 
         + "; Age: " + getAge()
         + ".";
     }
@@ -89,7 +73,7 @@ public class User {
     // User hash code
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.firstName, this.lastName, this.email);
+        return Objects.hashCode(this.id, this.firstName, this.lastName, this.username);
     }
 
     // User equals method    
@@ -100,8 +84,6 @@ public class User {
         return Objects.equal(this.getFirstName(), other.getFirstName())
             && Objects.equal(this.getLastName(), other.getLastName())
             && Objects.equal(this.getUsername(), other.getUsername())
-            && Objects.equal(this.getGender(), other.getGender())
-            && Objects.equal(this.getEmail(), other.getEmail())
             && Objects.equal(this.getAge(), other.getAge());
     }
 
@@ -130,22 +112,6 @@ public class User {
         this.username = username;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email.toLowerCase();
-    }
-
     public int getAge() {
         return age;
     }
@@ -156,7 +122,7 @@ public class User {
         }
     }
 
-    public long getID() {
+    public long getId() {
         return id;
     }
     
@@ -170,5 +136,13 @@ public class User {
     
     public void addRating(long ID, long movieID, int rating) {
         ratings.add(new Rating(ID, movieID, rating));
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }

@@ -17,7 +17,7 @@ public class Accounts extends Controller {
 
   public static void logout() {
 	  User user = getLoggedInUser();
-	  user.loggedIn = false;
+	  user.setLoggedIn(false);
 
 	  session.clear();
 	  index();
@@ -39,10 +39,9 @@ public class Accounts extends Controller {
 	  return user;
   }
   
-  public static void register(String firstName, String lastName, int age, String nationality, String email, String password, String password2) {
-	  Logger.info(firstName + " " + lastName + " " + email + " " + password);
-	  User user = new User(firstName, lastName, email, password, age, nationality);
-
+  public static void register(String firstName, String lastName, String username, String password, int age) {
+	  Logger.info(firstName + " " + lastName + " " + username + " " + age);
+	  User user = new User(firstName, lastName, username, password, age);
 	  index();
   }
 

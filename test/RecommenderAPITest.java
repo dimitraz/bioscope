@@ -34,15 +34,15 @@ public class RecommenderAPITest {
     @Test
     public void testGetUser() {
         // Create user
-        User fred = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        User fred = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(0, recommender.getUsers().size());
         
         // Add user
-        recommender.addUser("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        recommender.addUser("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(1, recommender.getUsers().size());
         
-        long id = Iterables.get(recommender.getUsers(), 0).getID();
-        assertEquals(fred, recommender.getUserByEmail("Cartoon@gmail.com"));
+        long id = Iterables.get(recommender.getUsers(), 0).getId();
+        assertEquals(fred, recommender.getUserByUsername("freddy"));
         assertEquals(fred, recommender.getUser(id));
     }
 
@@ -50,11 +50,11 @@ public class RecommenderAPITest {
     public void testGetUsers() {
         assertEquals(0, recommender.getUsers().size());
         
-        User fred = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        User fred = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         recommender.addUser(fred);
         assertEquals(1, recommender.getUsers().size());
         
-        User jack = new User("Jack", "Lantern", "234", "M", "timburton@gmail.com", 22);
+        User jack = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         recommender.addUser(jack);
         assertEquals(2, recommender.getUsers().size());
         
@@ -65,23 +65,23 @@ public class RecommenderAPITest {
     
     @Test
     public void testGetUsersEmpty() {
-        User fred = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        User fred = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(0, recommender.getUsers().size());
         
-        recommender.addUser("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        recommender.addUser("Fred", "Flinstone", "freddy", "Secret123", 29);
         assertEquals(1, recommender.getUsers().size());
     }
     
     @Test
     public void testRemoveUser() {
-        User jack = new User("Jack", "Lantern", "234", "M", "timburton@gmail.com", 22);
+        User jack = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         recommender.addUser(jack);
         assertEquals(Iterables.get(recommender.getUsers(), 0), jack); 
         
-        recommender.removeUser(jack.getID());
+        recommender.removeUser(jack.getId());
         assertEquals(recommender.getUsers().size(), 0);
-        assertNull(recommender.getUser(jack.getID()));
-        assertNull(recommender.getUserByEmail(jack.getEmail()));
+        assertNull(recommender.getUser(jack.getId()));
+        assertNull(recommender.getUserByUsername(jack.getUsername()));
     }
 
     // Movie methods
@@ -103,13 +103,13 @@ public class RecommenderAPITest {
     @Test
     public void testAddRating() throws Exception {
         String[] genres = {"0", "0", "1", "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "1", "0", "0", "1"};
-        User user = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        User user = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         Movie movie = new Movie(0l, "Kill Your Darlings", "2010", "http://", genres);
         recommender.addUser(user);
         recommender.addMovie(movie);
         assertEquals(recommender.getUsers().size(), 1);
         
-        long idU = Iterables.get(recommender.getUsers(), 0).getID();
+        long idU = Iterables.get(recommender.getUsers(), 0).getId();
         long idM = Iterables.get(recommender.getMovies(), 0).getId();
         
         Rating rating = new Rating(idU, idM, -5);
@@ -137,18 +137,18 @@ public class RecommenderAPITest {
         recommender.addMovie(movie2);
         recommender.addMovie(movie3);
         
-        User jim = new User("Jim", "Halpert", "234", "M", "jim@dundermifflin.com", 32);
-        User creed = new User("Creed", "Bratton", "234", "M", "creed@dundermifflin.com", 60);
+        User jim = new User("Jim", "Halpert", "jimbo", "@dundermifflin123", 32);
+        User creed = new User("Creed", "Bratton", "creed", "@dundermifflin123", 60);
         recommender.addUser(jim);
         recommender.addUser(creed);
         
-        Rating rating1 = new Rating(jim.getID(), 1, 5);
-        Rating rating2 = new Rating(jim.getID(), 2, 4);
-        Rating rating3 = new Rating(jim.getID(), 3, 3);
+        Rating rating1 = new Rating(jim.getId(), 1, 5);
+        Rating rating2 = new Rating(jim.getId(), 2, 4);
+        Rating rating3 = new Rating(jim.getId(), 3, 3);
         
-        Rating rating4 = new Rating(creed.getID(), 1, 5);
-        Rating rating5 = new Rating(creed.getID(), 2, 4);
-        Rating rating6 = new Rating(creed.getID(), 3, 3);
+        Rating rating4 = new Rating(creed.getId(), 1, 5);
+        Rating rating5 = new Rating(creed.getId(), 2, 4);
+        Rating rating6 = new Rating(creed.getId(), 3, 3);
         
         recommender.addRating(rating1);
         recommender.addRating(rating2);
@@ -157,9 +157,9 @@ public class RecommenderAPITest {
         recommender.addRating(rating5);
         recommender.addRating(rating6);
         
-        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getID()), 0), movie1);
-        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getID()), 1), movie2);
-        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getID()), 2), movie3);
+        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getId()), 0), movie1);
+        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getId()), 1), movie2);
+        assertEquals(Iterables.get(recommender.getUserRecommendations(jim.getId()), 2), movie3);
     }
     
     @Test

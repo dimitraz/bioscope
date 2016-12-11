@@ -17,7 +17,7 @@ public class RatingTest {
     
     @Before 
     public void SetUp() {
-        user = new User("Fred", "Flinstone", "234", "M", "Cartoon@gmail.com", 29);
+        user = new User("Fred", "Flinstone", "freddy", "Secret123", 29);
         recommender = new RecommenderAPI();
         recommender.addUser(user);
     }
