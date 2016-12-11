@@ -72,7 +72,7 @@ public class ParseFiles {
             String[] movieTokens = movieDetails.split(delims);
 
             if (movieTokens.length == 23) {
-                String[] genres = {movieTokens[5], movieTokens[6], movieTokens[7], movieTokens[8], movieTokens[9], movieTokens[10], movieTokens[11], movieTokens[12], movieTokens[13], movieTokens[14], movieTokens[15], movieTokens[16], movieTokens[17], movieTokens[18], movieTokens[19], movieTokens[20], movieTokens[21], movieTokens[22]};
+                String[] genres = {movieTokens[4], movieTokens[5], movieTokens[6], movieTokens[7], movieTokens[8], movieTokens[9], movieTokens[10], movieTokens[11], movieTokens[12], movieTokens[13], movieTokens[14], movieTokens[15], movieTokens[16], movieTokens[17], movieTokens[18], movieTokens[19], movieTokens[20], movieTokens[21], movieTokens[22]};
                 Movie movie = new Movie(movieTokens[1], movieTokens[2], movieTokens[3], genres);
                 recommenderAPI.addMovie(movie);
             } 

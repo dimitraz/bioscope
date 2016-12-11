@@ -4,8 +4,12 @@ body {
 	color: #fff;
 }
 
-h1, h2, h3, h4, h5, h6, a {
+h1, h2, h3, h4, h5, h6, a, .ui.button {
 	font-family: 'Inconsolata', monospace;
+}
+
+h2 a {
+	color: #fff;
 }
 
 a, a:hover, .ui.menu .item,
@@ -35,8 +39,108 @@ a, a:hover, .ui.menu .item,
 	background-size: cover;
 	margin: 0 !important;
 }
+.column ul, .column li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
 
 .row {
 	margin: 0;
 	padding: 0 !important;
+}
+
+.date {
+	border-bottom: 1px solid #fff;
+	padding-bottom: 2px;
+}
+
+.rating {
+	overflow: hidden;
+	display: inline-block;
+	color: #7f8c8d;
+	font-size: 23px;
+}
+
+.rating-input {
+	float: right;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 0 0 0 -16px;
+	opacity: 0;
+	color: #7f8c8d;
+}
+
+.rating-star, .rating-star-m, .rating-star-0 {
+     position: relative;
+     float: right;
+     display: block;
+     width: 30px;
+     height: 30px;
+ }
+  
+.rating:hover .rating-star:hover,
+.rating:hover .rating-star:hover ~ .rating-star,
+.rating-input:checked ~ .rating-star {
+    color: #f1c40f;
+    cursor: pointer;
+}
+  
+.rating:hover .rating-star-m:hover,
+.rating:hover .rating-star-m:hover ~ .rating-star-m,
+.rating-input:checked ~ .rating-star-m {
+    color: #c0392b;
+    cursor: pointer;
+}
+  
+.rating:hover .rating-star-0:hover,
+.rating:hover .rating-star-0:hover ~ .rating-star-0,
+.rating-input:checked ~ .rating-star-0 {
+    color: #fff;
+    cursor: pointer;
+}
+  
+.rating-star,
+.rating:hover .rating-star {
+    position: relative;
+    float: right;
+    display: block;
+    width: 30px;
+    height: 30px;
+}
+
+button#rating, button.ui.submit.button {
+	background: none;
+	border: none;
+	color: #c0392b;
+}
+
+button.ui.submit.button {
+	padding: 0;
+}
+
+
+.ui.form .field>label {
+	font-weight: normal;
+}
+
+.ui.form .fields .field, .ui.form .field {
+	padding-bottom: 1em;
+}
+
+h3.form {
+	margin-bottom: 2.5em;
+}
+
+.ui.form input:not([type]), .ui.form input[type=text], .ui.form input[type=email], .ui.form input[type=search], .ui.form input[type=password], .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=tel], .ui.form input[type=time], .ui.form input[type=url], .ui.form input[type=number] {
+	background: none;
+	border: 2px solid #fff;
+	color: #fff;
+	font-family: 'Inconsolata', monospace;
+}
+
+.ui.form input:not([type]):focus, .ui.form input[type=text]:focus, .ui.form input[type=email]:focus, .ui.form input[type=search]:focus, .ui.form input[type=password]:focus, .ui.form input[type=date]:focus, .ui.form input[type=datetime-local]:focus, .ui.form input[type=tel]:focus, .ui.form input[type=time]:focus, .ui.form input[type=url]:focus, .ui.form input[type=number]:focus {
+	background: none;
+	color: #fff;
 }

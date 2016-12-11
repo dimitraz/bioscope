@@ -2,7 +2,7 @@
 
 	<nav class="ui secondary pointing menu">
 		<div class="left menu">
-			<h2>Bioscope</h2>
+			<h2><i class="film icon"></i> Bioscope </h2>
 		</div>
 		<div class="right menu">
 			<a class="ui item" href="/editaccount"> My Account </a> <a class="ui item"
@@ -11,13 +11,28 @@
 	</nav>
 	
 	<section>
-		<div class="ui one column center aligned padded grid">
-			<div class="column"><h1>Hello, ${user.firstName}</h1></div>
-			<div class="column">
-				Your recommendations: <br /> 
+		<div class="ui two column responsive center aligned padded grid">
+			<div class="column" style="background: url(https://s-media-cache-ak0.pinimg.com/564x/77/be/db/77bedb43147a7a478aff22f470567bbb.jpg); background-size: cover; opacity: 0.4;"></div>
+			<div class="black column" style="padding: 18em 0;"><h1>Hello, ${user.firstName}</h1></div>
+		</div>
+		<div class="ui one column responsive center aligned padded grid">
+			<div class="column" style="padding: 15em 0;">
+				<h2>Recommendations </h2> <br />
 				<ul>
 				#{list items: movies, as: 'movie'} 
-					<li>${movie.title}</li>
+					<li style="padding: 1em 0;"><h2 style="font-weight: normal"><a href="/movies/${movie.id}">${movie.title}</a></h2>
+						<br /> 
+						Average rating: ${movie.averageRating()}
+						#{if movie.averageRating()  > 1 }
+							<i class="smile icon"></i> <br /><br />
+						#{/if}
+						#{elseif movie.averageRating()  >= 0 }
+						    <i class="meh icon"></i> <br /><br />
+						#{/elseif}
+						#{else}
+						    <i class="frown icon"></i> <br /><br />
+						#{/else}
+					</li>
 				#{/list}
 				</ul>
 			</div>
@@ -26,14 +41,50 @@
 	
 	<section>
 		<div class="ui one column center aligned padded grid">
-			<div class="column"><h1>Hello, ${user.firstName}</h1></div>
 			<div class="column">
-				Your recommendations: <br /> 
+				Movies rated by you: <br /> 
 				<ul>
-				#{list items: user.getRatings(), as: 'rating'} 
-					<li>${rating.rating}</li>
+				#{list items: ratedMovies, as: 'movie'} 
+					<li>${movie.title} - ]</li>
 				#{/list}
 				</ul>
 			</div>
+		</div>
+	</section>
+	
+		<section class="topTen">
+		
+		<div class="ui two column center aligned padded grid">
+		<div class="column" style="padding: 5em 0;">
+			<h4>Popular movies</h4>
+		</div>
+		%{
+			index = 0;
+     		for(movie in topTen) { 
+     			if(index % 2 == 0) {
+		}%
+				<div class="row">
+					<div class="column" style="background: url(/public/images/${movie.id}.jpg); background-size: cover;"></div>
+					<div class="black column" style="padding: 15em 0;">
+						<h3>${movie.title}</h3>
+						<a href="/movies/${movie.id}">movie details</a>
+					</div>
+				</div>
+		%{
+				}
+				else {
+		}%
+				<div class="row">
+					<div class="black column" style="padding: 15em 5em;">
+						<h3>${movie.title}</h3>
+						<a href="/movies/${movie.id}">movie details</a>
+					</div>
+					<div class="column" style="background: url(/public/images/${movie.id}.jpg) center center;"></div>
+				</div>
+		%{
+				}
+				index++;
+		     }
+		}%
 		</div>
 	</section>
