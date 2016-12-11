@@ -1,12 +1,16 @@
 package models;
 import static org.junit.Assert.*;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
 
+import com.google.common.collect.Iterables;
+
+import controllers.RecommenderAPI;
 import exceptions.GenreLengthException;
 import models.Genre;
 import models.Movie;
@@ -49,8 +53,12 @@ public class MovieTest {;
     public void testEquals() throws GenreLengthException {
         String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "0"};
         
+        RecommenderAPI recommender = new RecommenderAPI(null);
         Movie movie = new Movie("Kill Your Darlings", "2010", "http://", genres);
-        Movie movieTwo = new Movie("Kill Your Darlings", "2010", "http://", genres);
-        assertEquals(movie, movieTwo);
+        recommender.addMovie(movie);
+        Collection<Movie> movies = recommender.getMovies();
+        Movie movie2  = Iterables.get(movies, 0);
+        
+        assertEquals(movie, movie2);
     }
 }

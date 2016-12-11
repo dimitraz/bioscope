@@ -37,11 +37,6 @@ public class UserTest {
     public void testEmptyName() {
         User user = new User("", "Flinstone", "freddy", "Secret123", 29);
     }
-    
-    @Test
-    public void testDuplicateUser() {
-        fail("Not yet implemented");
-    }
 
     @Test
     public void testUserExistence() {
