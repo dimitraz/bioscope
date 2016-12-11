@@ -119,7 +119,7 @@ public class ParseFiles {
         
         // Load data
         try {
-            // recommenderAPI.load();
+            recommenderAPI.load();
         } 
         catch (Exception e) {
             System.out.println("Unable to load file.");
@@ -128,7 +128,7 @@ public class ParseFiles {
         
         // Parse Movies
         try {
-           parseMovies(recommenderAPI);
+           // parseMovies(recommenderAPI);
         } catch (Exception e) {
             System.out.println("Unable to parse movies.");
             e.printStackTrace();
@@ -136,7 +136,7 @@ public class ParseFiles {
         
         // Parse Users
         try {
-            parseUsers(recommenderAPI);
+           // parseUsers(recommenderAPI);
         }
         catch(Exception e) {
             System.out.println("Unable to parse users.");
@@ -145,7 +145,7 @@ public class ParseFiles {
         
         // Parse Ratings
         try { 
-           parseRatings(recommenderAPI);
+          //  parseRatings(recommenderAPI);
             
         }
         catch (Exception e) {
@@ -192,7 +192,7 @@ public class ParseFiles {
         
         // Write to file
         try {
-            recommenderAPI.write();
+            // recommenderAPI.write();
         } 
         catch (Exception e) {
             System.out.println("Unable to write to file.");

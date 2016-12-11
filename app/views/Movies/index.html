@@ -2,7 +2,7 @@
 
 	<nav class="ui secondary pointing menu">
 		<div class="left menu">
-			<h2><a href="/home/index">Bioscope</a></h2>
+			<h2><i class="film icon"></i> <a href="/home/index">Bioscope</a></h2>
 		</div>
 		<div class="right menu">
 			<a class="ui item" href="/editaccount"> My Account </a> <a class="ui item"
@@ -32,6 +32,21 @@
 		#{/elseif}
 		#{elseif movie.genresIn.contains("Crime")}
 		    <div class="column" style="background: url(/public/images/crime.jpg); background-size: cover; opacity: 0.4">
+		#{/elseif}
+		#{elseif movie.genresIn.contains("War")}
+		    <div class="column" style="background: url(/public/images/war.jpg); background-size: cover; opacity: 0.4">
+		#{/elseif}
+		#{elseif movie.genresIn.contains("Drama")}
+		    <div class="column" style="background: url(/public/images/drama.jpg); background-size: cover; opacity: 0.4">
+		#{/elseif}
+		#{elseif movie.genresIn.contains("Film-Noir")}
+		    <div class="column" style="background: url(/public/images/filmnoir.jpg); background-size: cover; opacity: 0.4">
+		#{/elseif}
+		#{elseif movie.genresIn.contains("Documentary")}
+		    <div class="column" style="background: url(/public/images/dcoumentary.jpg); background-size: cover; opacity: 0.4">
+		#{/elseif}
+		#{elseif movie.genresIn.contains("Comedy")}
+		    <div class="column" style="background: url(/public/images/comedy.jpg); background-size: cover; opacity: 0.4">
 		#{/elseif}
 		#{else}
 			<div class="column" style="background: url(); background-size: cover; opacity: 0.4">

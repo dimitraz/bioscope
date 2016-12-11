@@ -32,7 +32,6 @@ public class MovieTest {;
     public void testAddMovie() throws GenreLengthException {
         String genres[] = {"0", "0", "1", "0", "0", "0", "1", "0", "0", "0", "1", "0", "0", "1", "1", "0", "1", "1", "1"};
         Movie movie = new Movie("Amelie", "2009", "http://", genres);
-        assertEquals(movie.getId(), 4);
         assertEquals(movie.getTitle(), "Amelie");
         assertEquals(movie.getReleaseDate(), "2009");
         assertEquals(movie.getUrl(), "http://");

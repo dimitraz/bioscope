@@ -16,12 +16,11 @@
 			<div class="black column" style="padding: 18em 0;"><h1>Hello, ${user.firstName}</h1></div>
 		</div>
 		<div class="ui one column responsive center aligned padded grid">
-			<div class="column" style="padding: 15em 0;">
-				<h2>Recommendations </h2> <br />
+			<div class="column" style="padding: 10em 0;">
+				<h2>Recommendations for you</h2> <br />
 				<ul>
 				#{list items: movies, as: 'movie'} 
-					<li style="padding: 1em 0;"><h2 style="font-weight: normal"><a href="/movies/${movie.id}">${movie.title}</a></h2>
-						<br /> 
+					<li style="padding: 1em 0;"><h2 style="font-weight: normal; margin: 0"><a href="/movies/${movie.id}">${movie.title}</a></h2>
 						Average rating: ${movie.averageRating()}
 						#{if movie.averageRating()  > 1 }
 							<i class="smile icon"></i> <br /><br />
@@ -41,22 +40,21 @@
 	
 	<section>
 		<div class="ui one column center aligned padded grid">
-			<div class="column">
-				Movies rated by you: <br /> 
+			<div class="black column" style="padding: 10em 0;">
+				<h2>Movies rated by you:</h2> <br /> 
 				<ul>
-				#{list items: ratedMovies, as: 'movie'} 
-					<li>${movie.title} - ]</li>
+				#{list items: user.getRatings(), as: 'rating'} 
+					<li><a href="/movies/${rating.movieId}">${api.getMovie(rating.movieId).getTitle()}</a> &rsaquo; ${rating.rating}</li>
 				#{/list}
 				</ul>
 			</div>
 		</div>
 	</section>
 	
-		<section class="topTen">
-		
+	<section class="topTen">
 		<div class="ui two column center aligned padded grid">
 		<div class="column" style="padding: 5em 0;">
-			<h4>Popular movies</h4>
+			<h2>Popular movies</h2>
 		</div>
 		%{
 			index = 0;

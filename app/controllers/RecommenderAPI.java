@@ -215,7 +215,6 @@ public class RecommenderAPI implements RecommenderInterface {
                 highestProduct = product;
                 highestUser = user2;
             }
-            
             // System.out.println(product + " " + user2.getFirstName());
         }
         // System.out.println("Highest: " + highestProduct + " " + highestUser.getFirstName());

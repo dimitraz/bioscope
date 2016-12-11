@@ -21,6 +21,8 @@ public class Home extends Controller {
         
         List<Movie> movies = Accounts.recommenderAPI().getUserRecommendations(user.getId());
         Collection<Movie> topTen = Accounts.recommenderAPI().getTopTenMovies();
-        render(user, movies, topTen, ratedMovies);
+        
+        RecommenderAPI api = Accounts.recommenderAPI();
+        render(user, movies, topTen, ratedMovies, api);
     }
 }
