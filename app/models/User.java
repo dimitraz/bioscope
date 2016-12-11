@@ -59,6 +59,10 @@ public class User {
         return arr.length > 1;
     }
     
+    public boolean checkPassword(String password) {
+        return this.password.equals(password);
+    } 
+    
     // User to string
     @Override
     public String toString() {
@@ -144,5 +148,9 @@ public class User {
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

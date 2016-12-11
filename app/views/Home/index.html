@@ -5,39 +5,35 @@
 			<h2>Bioscope</h2>
 		</div>
 		<div class="right menu">
-			<a class="ui item" href="/signup"> Sign up </a> <a class="ui item"
-				href="/login"> Sign in </a>
+			<a class="ui item" href="/editaccount"> My Account </a> <a class="ui item"
+				href="/logout"> Log out </a>
 		</div>
 	</nav>
 	
-	<section class="topTen">
-		<div class="ui two column center aligned padded grid">
-		%{
-			index = 0;
-     		for(movie in topTen) { 
-     			if(index % 2 == 0) {
-		}%
-				<div class="row">
-					<div class="column" style="background: url(/public/images/${movie.id}.jpg); background-size: cover;"></div>
-					<div class="black column" style="padding: 15em 0;">
-						<h3>${movie.title}</h3>
-						<a href="/movies/${movie.id}">rate movie</a>
-					</div>
-				</div>
-		%{
-				}
-				else {
-		}%
-				<div class="row">
-					<div class="black column" style="padding: 15em 5em;">
-						<h3>${movie.title}</h3>
-					</div>
-					<div class="column" style="background: url(/public/images/${movie.id}.jpg) center center;"></div>
-				</div>
-		%{
-				}
-				index++;
-		     }
-		}%
+	<section>
+		<div class="ui one column center aligned padded grid">
+			<div class="column"><h1>Hello, ${user.firstName}</h1></div>
+			<div class="column">
+				Your recommendations: <br /> 
+				<ul>
+				#{list items: movies, as: 'movie'} 
+					<li>${movie.title}</li>
+				#{/list}
+				</ul>
+			</div>
+		</div>
+	</section>
+	
+	<section>
+		<div class="ui one column center aligned padded grid">
+			<div class="column"><h1>Hello, ${user.firstName}</h1></div>
+			<div class="column">
+				Your recommendations: <br /> 
+				<ul>
+				#{list items: user.getRatings(), as: 'rating'} 
+					<li>${rating.rating}</li>
+				#{/list}
+				</ul>
+			</div>
 		</div>
 	</section>

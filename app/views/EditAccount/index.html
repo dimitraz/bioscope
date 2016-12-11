@@ -1,0 +1,46 @@
+#{extends 'main.html' /}
+#{set title:'Edit Details' /}
+
+	<nav class="ui secondary pointing menu">
+		<div class="left menu">
+			<h2>Bioscope</h2>
+		</div>
+		<div class="right menu">
+			<a class="ui active item" href="/editaccount"> My Account </a> <a class="ui item"
+				href="/logout"> Log out </a>
+		</div>
+	</nav>
+
+	<section class="ui two column middle aligned centered grid container">
+		<div class="column">
+		<h2>Edit Account</h2>
+		
+			<form class="ui account-post reply form" action="/editaccount/change" method="POST">
+			     <div class="two fields">
+			      <div class="field">
+			        <label>First Name</label>
+			        <input placeholder="First Name" type="text" name="firstName" value="${user.firstName}">
+			      </div>
+			      <div class="field">
+			        <label>Last Name</label>
+			        <input placeholder="Last Name" type="text" name="lastName" value="${user.lastName}">
+			      </div>
+			    </div>
+			    <div class="two fields">
+			      <div class="field">
+			        <label>Age</label>
+			        <input placeholder="Age" type="text" name="age"value="${user.age}">
+			      </div>
+			    </div>    <div class="field">
+			      <label>Username</label>
+			      <input placeholder="Username" type="text" name="username" value="${user.username}">
+			    </div>
+			    <div class="field">
+			      <label>Password</label>
+			      <input type="password" name="password">
+			    </div>
+			    <button class="ui submit button">Submit</button>
+			 </form>
+		</div>
+	</section>
+		  

@@ -8,7 +8,8 @@ h1, h2, h3, h4, h5, h6, a {
 	font-family: 'Inconsolata', monospace;
 }
 
-a, a:hover, .ui.menu .item { 
+a, a:hover, .ui.menu .item,
+.ui.secondary.pointing.menu .active.item:hover { 
 	color: #c0392b;
 }
 
@@ -24,9 +25,12 @@ a, a:hover, .ui.menu .item {
 	-webkit-margin-after: 0;
 }
 
-.ui.secondary.pointing.menu .item a {
+.ui.secondary.pointing.menu .item a, .ui.form .field > label,
+.ui.secondary.pointing.menu .active.item,
+.ui.secondary.pointing.menu a.item:hover {
 	color: #fff;
 }
+
 .column, .ui.grid > .row > .black.column {
 	background-size: cover;
 	margin: 0 !important;

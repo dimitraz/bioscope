@@ -3,10 +3,22 @@
 # ~~~~
 
 # Home page
-GET     /                                       Home.index
+GET     /                                       Accounts.index
 
 # Movie page
 GET		/movies/{id}							Movies.index
+POST 	/movies/{id}/addrating					Movies.rateMovie
+
+# Accounts
+GET    /signup                                  Accounts.signup
+GET    /login                                   Accounts.login
+GET    /logout                                  Accounts.logout
+POST   /authenticate                            Accounts.authenticate
+POST   /register                                Accounts.register
+
+# Edit Account
+GET 	/editaccount							EditAccount.index
+POST 	/editaccount/change						EditAccount.change
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
