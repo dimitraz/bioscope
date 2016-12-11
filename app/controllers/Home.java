@@ -13,16 +13,21 @@ public class Home extends Controller {
     
     public static void index() {
         User user = Accounts.getLoggedInUser();
-        List<Rating> ratings = user.getRatings();
-        List<Movie> ratedMovies = new ArrayList<>();
-        for(Rating r : ratings) {
-            ratedMovies.add(Accounts.recommenderAPI().getMovie(r.getMovieId()));
+        if(user != null) {
+            List<Rating> ratings = user.getRatings();
+            List<Movie> ratedMovies = new ArrayList<>();
+            for(Rating r : ratings) {
+                ratedMovies.add(Accounts.recommenderAPI().getMovie(r.getMovieId()));
+            }
+            
+            List<Movie> movies = Accounts.recommenderAPI().getUserRecommendations(user.getId());
+            Collection<Movie> topTen = Accounts.recommenderAPI().getTopTenMovies();
+            
+            RecommenderAPI api = Accounts.recommenderAPI();
+            render(user, movies, topTen, ratedMovies);
         }
-        
-        List<Movie> movies = Accounts.recommenderAPI().getUserRecommendations(user.getId());
-        Collection<Movie> topTen = Accounts.recommenderAPI().getTopTenMovies();
-        
-        RecommenderAPI api = Accounts.recommenderAPI();
-        render(user, movies, topTen, ratedMovies);
+        else {
+            Accounts.index();
+        }
     }
 }
