@@ -11,8 +11,12 @@ Bioscope is a small web application running on [Play Framework](https://www.play
 
 Assuming installation of Play (1.4.*)
 
-* `git clone https://dimitraz@bitbucket.org/dimitraz/film-recommendations.git`
+* `git clone git@github.com:dimitraz/bioscope.git`
 
 * `cd to/repo/`
 
 * `play run` 
+
+## Notes ##
+
+Online example using small data set at [bioscope.herokuapp.com](http://bioscope.herokuapp.com)
