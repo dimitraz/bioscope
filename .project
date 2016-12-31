@@ -15,7 +15,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>docviewer</name><type>2</type><location>/Users/mitch/Applications/play-1.4.1/modules/docviewer/app</location></link>
-<link><name>public/docviewer</name><type>2</type><location>/Users/mitch/Applications/play-1.4.1/modules/docviewer/public</location></link>
-</linkedResources>
+	<linkedResources>
+		<link>
+			<name>docviewer</name>
+			<type>2</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Applications/play-1.4.1/modules/docviewer/app</locationURI>
+		</link>
+		<link>
+			<name>public/docviewer</name>
+			<type>2</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Applications/play-1.4.1/modules/docviewer/public</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -2,3 +2,18 @@
 
 require:
     - play
+    - com.thoughtworks.xstream -> xstream 1.4.9:
+          force: true
+    - com.google.guava -> guava 18.0
+    - org.codehaus.jettison -> jettison 1.3.7:
+          force: true
+    - org.codehaus.jettison -> jettison 1.2:
+          force: true
+    - edu.princeton.cs.introcs -> stdlib-package 1.0
+
+repositories:
+    - edu.princeton.cs.introcs: 
+        type:       local 
+        artifact:   "${application.path}/lib/stdlib-package-1.0.jar" 
+        contains: 
+            - edu.princeton.cs.introcs -> * 

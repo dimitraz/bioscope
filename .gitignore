@@ -2,29 +2,14 @@ Ignore all dotfiles...
 .*
 # except for .gitignore
 !.gitignore
-!.classpath
-!.project
 
-
-# Ignore Play! working directory #
-war
-db
+# Eclipse
 eclipse
-lib
-log
-logs
-modules
-precompiled
-project/project
-project/target
-crud/*
-data/*
-conf/crud/*
-conf/cloudbees*
-public/crud/*
-target
+.settings
+.cache
+.project
+.classpath
+bin
 tmp
-test-result
-server.pid
-*.iml
-*.eml
+
+documentation
