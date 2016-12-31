@@ -13,6 +13,7 @@ import models.Rating;
 import models.User;
 import utils.SerializerInterface;
 import utils.JSONSerializer;
+import utils.XMLSerializer;
 
 public class ParseFiles {
     
@@ -113,13 +114,13 @@ public class ParseFiles {
     
     // Display all parsed data
     public static void main(String[] args) {
-        File datastore = new File("datastoreLarge.json");
-        SerializerInterface serializer = new JSONSerializer(datastore);
+        File datastore = new File("datastoreLarge.xml");
+        SerializerInterface serializer = new XMLSerializer(datastore);
         RecommenderAPI recommenderAPI = new RecommenderAPI(serializer);
         
         load(recommenderAPI);
         // write(recommenderAPI);
-        // display(recommenderAPI);
+        display(recommenderAPI);
     }
     
     public static void load(RecommenderAPI recommenderAPI) {

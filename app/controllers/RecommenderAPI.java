@@ -20,9 +20,9 @@ import models.User;
 import utils.SerializerInterface;
 
 public class RecommenderAPI implements RecommenderInterface {
-    public Map<Long, User> userIndex = new HashMap<>();
-    public Map<String, User> usernameIndex = new HashMap<>();
-    public Map<Long, Movie> movieList = new HashMap<>();
+    public Map<Long, Movie> movieList = new HashMap<Long, Movie>();
+    public Map<Long, User> userIndex = new HashMap<Long, User>();
+    public Map<String, User> usernameIndex = new HashMap<String, User>();
     private SerializerInterface serializer;
 
     public RecommenderAPI() {
@@ -37,16 +37,16 @@ public class RecommenderAPI implements RecommenderInterface {
         serializer.read();
         User.counter = (long) serializer.pop();
         Movie.counter = (long) serializer.pop();
-        usernameIndex = (Map<String, User>) serializer.pop();
-        userIndex = (Map<Long, User>) serializer.pop();
-        movieList = (Map<Long, Movie>) serializer.pop();
+        this.movieList = (HashMap<Long, Movie>) serializer.pop();
+        this.userIndex = (HashMap<Long, User>) serializer.pop();
+        this.usernameIndex = (HashMap<String, User>) serializer.pop();
     }
 
     @Override
     public void write() throws Exception {
-        serializer.push(movieList);
-        serializer.push(userIndex);
-        serializer.push(usernameIndex);
+        serializer.push(this.usernameIndex);
+        serializer.push(this.userIndex);
+        serializer.push(this.movieList);
         serializer.push(Movie.counter);
         serializer.push(User.counter);
         serializer.write();
@@ -190,6 +190,7 @@ public class RecommenderAPI implements RecommenderInterface {
     public User bestMatchedUser(long userID) {
         User user1 = getUser(userID);               // User 1
         List<Rating> ratings1 = user1.getRatings(); // User 1's ratings
+        Collections.reverse(ratings1);          
         Collection<User> users = getUsers();        // List of all users
         
         int product = 0;                            // Dot product 
@@ -199,6 +200,7 @@ public class RecommenderAPI implements RecommenderInterface {
         for(User user2 : users) {
             if(!user2.equals(user1)) {
                 List<Rating> ratings2 = user2.getRatings(); // User 2's ratings
+                Collections.reverse(ratings2);
                 
                 for(Rating r1 : ratings1) {
                     for(Rating r2 : ratings2) {
